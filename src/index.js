@@ -1,35 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { createGlobalStyle } from 'styled-components';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
-const AppStyle = createGlobalStyle`
-  * {
-    box-sizing: border-box;
-  }
-
-  html {
-    font-size: 100%;
-    min-height: 100%;
-  }
-
-  body {
-    margin: 0;
-    overflow-x: hidden;
-    font-size: 1rem;
-    font-family: 'Baloo 2', cursive;
-    color: #2b2b2b;
-  }
-`;
-
 ReactDOM.render(
-  //<React.StrictMode>
-    <>
-      <AppStyle />
-      <App />
-    </>,
-  //</React.StrictMode>,
+  <App />,
   document.getElementById('root')
 );
 
