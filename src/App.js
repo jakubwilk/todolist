@@ -20,6 +20,12 @@ const AppStyle = createGlobalStyle`
     font-family: 'Baloo 2', cursive;
     color: #2b2b2b;
   }
+
+  input,
+  button,
+  textarea {
+    font-size: 1rem;
+  }
 `;
 
 const App = () => {
