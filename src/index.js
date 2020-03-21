@@ -18,14 +18,18 @@ const AppStyle = createGlobalStyle`
     margin: 0;
     overflow-x: hidden;
     font-size: 1rem;
+    font-family: 'Baloo 2', cursive;
+    color: #2b2b2b;
   }
 `;
 
 ReactDOM.render(
-  <React.StrictMode>
-    <AppStyle />
-    <App />
-  </React.StrictMode>,
+  //<React.StrictMode>
+    <>
+      <AppStyle />
+      <App />
+    </>,
+  //</React.StrictMode>,
   document.getElementById('root')
 );
 

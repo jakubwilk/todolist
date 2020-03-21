@@ -1,11 +1,13 @@
 import React from 'react';
+import 'antd/dist/antd.css';
+import Navigation from './navigation-component/Navigation';
 
-function App() {
+const App = () => {
   return (
     <>
-      React
+      <Navigation />
     </>
-  );
+  )
 }
 
 export default App;
