@@ -1,7 +1,7 @@
 import React from 'react';
 import { createGlobalStyle } from 'styled-components';
 import { Switch, BrowserRouter, Route } from 'react-router-dom';
-import HomePage from './home-component/HomePage';
+import HomePage from './homepage-component/HomePage';
 
 const AppStyle = createGlobalStyle`
   * {

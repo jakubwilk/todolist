@@ -3,6 +3,14 @@ import styled from 'styled-components';
 
 import MenuItem from './MenuItem';
 
+const TopBar = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 10;
+`;
+
 const Grid = styled.div`
   width: 100%;
   padding-left: 2rem;
@@ -89,25 +97,27 @@ class Navigation extends React.Component {
     const { current } = this.state;
 
     return (
-      <Grid>
-        <Navbar>
-          <>
-            Logo
-          </>
-          <Menu>
-            {AnchorList.map(item => <MenuItem 
-              key={item.id} 
-              href={item.href} 
-              title={item.title} 
-              rel={item.rel} 
-              handleClick={this.setCurrentLink} 
-              status={current} 
-              name={item.name}
-              disabled={item.disabled} />
-            )}
-          </Menu>
-        </Navbar>
-      </Grid>
+      <TopBar>
+        <Grid>
+          <Navbar>
+            <>
+              Logo
+            </>
+            <Menu>
+              {AnchorList.map(item => <MenuItem 
+                key={item.id} 
+                href={item.href} 
+                title={item.title} 
+                rel={item.rel} 
+                handleClick={this.setCurrentLink} 
+                status={current} 
+                name={item.name}
+                disabled={item.disabled} />
+              )}
+            </Menu>
+          </Navbar>
+        </Grid>
+      </TopBar>
     );
   }
 }
