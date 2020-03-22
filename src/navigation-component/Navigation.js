@@ -11,17 +11,20 @@ const TopBar = styled.div`
   z-index: 10;
 `;
 
-const Grid = styled.div`
+const Container = styled.div`
   width: 100%;
   padding-left: 2rem;
   padding-right: 2rem;
 
   @media screen and (min-width: 768px) {
     max-width: 860px;
-    padding-left: 0;
-    padding-right: 0;
     margin-left: auto;
     margin-right: auto;
+  }
+
+  @media screen and (min-width: 960px) {
+    padding-left: 0;
+    padding-right: 0;
   }
 `;
 
@@ -98,7 +101,7 @@ class Navigation extends React.Component {
 
     return (
       <TopBar>
-        <Grid>
+        <Container>
           <Navbar>
             <>
               Logo
@@ -116,7 +119,7 @@ class Navigation extends React.Component {
               )}
             </Menu>
           </Navbar>
-        </Grid>
+        </Container>
       </TopBar>
     );
   }
