@@ -1,32 +1,16 @@
 import React from 'react';
 import styled from 'styled-components';
+import background from '../utils/home-background.jpg';
 
-import HomeSVG from '../utils/homeSVG';
 import Welcomeblock from './Welcomeblock';
 
 const HomeWrapper = styled.section`
-  height: 100%;
+  background-image: url(${props => props.background});
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  height: 100vh;
   padding-top: 70px;
-
-  @media screen and (min-width: 768px) {
-    height: 100vh;
-    padding-top: 70px;
-    display: flex;
-    align-items: center;
-    position: relative;
-
-    &:after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      right: 0;
-      width: 65%;
-      height: 90%;
-      background-color: #706fd3;
-      border-top-left-radius: 100%;
-      z-index: 10;
-    }
-  }
 `;
 
 const Container = styled.div`
@@ -46,30 +30,11 @@ const Container = styled.div`
   }
 `;
 
-const HomeContent = styled.div`
-  display: flex;
-  justify-content: space-between;
-  position: relative;
-`;
-
-const HomeBackground = styled.div`
-  position: relative;
-  transform: translateX(-25rem);
-  top: 0;
-  z-index: 15;
-  width: 500px;
-`;
-
 const Home = () => {
   return (
-    <HomeWrapper>
+    <HomeWrapper background={background}>
       <Container>
-        <HomeContent>
-          <HomeBackground>
-            <HomeSVG />
-          </HomeBackground>
-          <Welcomeblock />
-        </HomeContent>
+        <Welcomeblock />
       </Container>
     </HomeWrapper>
   );

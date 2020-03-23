@@ -4,11 +4,13 @@ import styled from 'styled-components';
 import MenuItem from './MenuItem';
 
 const TopBar = styled.div`
+  background-color: white;
+  height: 70px;
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
-  z-index: 10;
+  z-index: 20;
 `;
 
 const Container = styled.div`
