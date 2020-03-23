@@ -38,10 +38,68 @@ const Navbar = styled.nav`
 `;
 
 const Menu = styled.ul`
+  display: none;
   list-style: none;
   padding: 0;
   margin: 0;
+  
+  @media screen and (min-width: 960px) {
+    display: flex;
+  }
+`;
+
+const MenuButton = styled.button`
+  border: 0;
+  background-color: white;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #2b2b2b;
   display: flex;
+  align-items: center;
+
+  &:focus {
+    outline: none;
+    color: #706fd3;
+
+    & > span,
+    & > span::before,
+    & > span::after {
+      background-color: #706fd3;
+    }
+  }
+
+  @media screen and (min-width: 960px) {
+    display: none;
+  }
+`;
+
+const MenuButtonLine = styled.span`
+  display: block;
+  position: relative;
+  height: 2px;
+  width: 25px;
+  background-color: #2b2b2b;
+  margin-right: 7px;
+
+  &::before {
+    content: '';
+    position: absolute;
+    height: 2px;
+    width: 25px;
+    background-color: #2b2b2b;
+    top: -7px;
+    left: 0;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    height: 2px;
+    width: 25px;
+    background-color: #2b2b2b;
+    top: 7px;
+    left: 0;
+  }
 `;
 
 const AnchorList = [
@@ -90,6 +148,7 @@ const AnchorList = [
 class Navigation extends React.Component {
   state = {
     current: 'home',
+    display: false,
   };
 
   setCurrentLink = e => {
@@ -108,6 +167,10 @@ class Navigation extends React.Component {
             <>
               Logo
             </>
+            <MenuButton>
+              <MenuButtonLine></MenuButtonLine>
+              Menu
+            </MenuButton>
             <Menu>
               {AnchorList.map(item => <MenuItem 
                 key={item.id} 

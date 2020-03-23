@@ -25,6 +25,7 @@ const AppStyle = createGlobalStyle`
   button,
   textarea {
     font-size: 1rem;
+    font-family: 'Baloo 2', cursive;
   }
 `;
 
