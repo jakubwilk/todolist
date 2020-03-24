@@ -38,13 +38,34 @@ const Navbar = styled.nav`
 `;
 
 const Menu = styled.ul`
-  display: none;
   list-style: none;
   padding: 0;
   margin: 0;
+
+  &.mobile {
+    display: flex;
+    position: fixed;
+    top: 70px;
+    height: calc(100vh - 70px);
+    width: 100%;
+    left: 0;
+    background-color: rgba(255,255,255,.95);
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  &.desktop {
+    display: none;
+  }
   
   @media screen and (min-width: 960px) {
-    display: flex;
+    &.mobile {
+      display: none;
+    }
+
+    &.desktop {
+      display: flex;
+    }
   }
 `;
 
@@ -148,7 +169,7 @@ const AnchorList = [
 class Navigation extends React.Component {
   state = {
     current: 'home',
-    display: false,
+    display: true,
   };
 
   setCurrentLink = e => {
@@ -157,8 +178,14 @@ class Navigation extends React.Component {
     });
   }
 
+  toggleMenu = () => {
+    this.setState({
+      display: !this.state.display
+    })
+  }
+
   render() {
-    const { current } = this.state;
+    const { current, display } = this.state;
 
     return (
       <TopBar>
@@ -167,11 +194,11 @@ class Navigation extends React.Component {
             <>
               Logo
             </>
-            <MenuButton>
+            <MenuButton onClick={this.toggleMenu}>
               <MenuButtonLine></MenuButtonLine>
               Menu
             </MenuButton>
-            <Menu>
+            <Menu className={display ? 'desktop' : 'mobile'}>
               {AnchorList.map(item => <MenuItem 
                 key={item.id} 
                 href={item.href} 

@@ -4,6 +4,13 @@ import { Link } from 'react-router-dom';
 
 const Item = styled.li`
   margin-left: 2rem;
+  margin-right: 2rem;
+  text-align: center;
+
+  @media screen and (min-width: 960px) {
+    margin-right: 0;
+    text-align: left;
+  }
 
   &.disabled {
     & > a {
@@ -18,6 +25,11 @@ const ItemLink = styled(Link)`
   text-decoration: none;
   color: #2b2b2b;
   transition: all .1s ease-in-out;
+  font-size: 2.5rem;
+
+  @media screen and (min-width: 960px) {
+    font-size: 1rem;
+  }
 
   &:hover,
   &:active,

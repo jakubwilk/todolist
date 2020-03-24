@@ -13,6 +13,16 @@ const AppStyle = createGlobalStyle`
     min-height: 100%;
   }
 
+  ::selection {
+    background-color: #706fd3;
+    color: white;
+  }
+
+  ::-moz-selection {
+    background-color: #706fd3;
+    color: white;
+  }
+
   body {
     margin: 0;
     overflow-x: hidden;
