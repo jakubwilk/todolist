@@ -1,7 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 import MenuItem from './MenuItem';
+
+import Logo from './../utils/logo.png';
 
 const TopBar = styled.div`
   background-color: white;
@@ -35,6 +38,15 @@ const Navbar = styled.nav`
   justify-content: space-between;
   align-items: center;
   height: 70px;
+`;
+
+const SiteHeading = styled.h1`
+  margin: 0;
+
+  & > a {
+    display: block;
+    height: 35px;
+  }
 `;
 
 const Menu = styled.ul`
@@ -191,9 +203,11 @@ class Navigation extends React.Component {
       <TopBar>
         <Container>
           <Navbar>
-            <>
-              Logo
-            </>
+            <SiteHeading>
+              <Link to='/' title='Back to homepage'>
+                <img src={Logo} alt='todoLIST - Your ToDo list' />
+              </Link>
+            </SiteHeading>
             <MenuButton onClick={this.toggleMenu}>
               <MenuButtonLine></MenuButtonLine>
               Menu
