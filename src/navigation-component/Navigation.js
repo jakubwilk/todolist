@@ -139,42 +139,47 @@ const AnchorList = [
   {
     id: 0,
     name: 'Home',
-    href: '/',
+    href: 'home',
     title: 'Go to homepage',
     rel: 'home',
     disabled: false,
+    sameSite: true,
   },
   {
     id: 1,
     name: 'About',
-    href: '/#about',
+    href: 'about',
     title: 'Some information about us',
     rel: 'about',
     disabled: false,
+    sameSite: true,
   },
   {
     id: 2,
     name: 'Features',
-    href: '/#features',
+    href: 'features',
     title: 'Why you should choose us',
     rel: 'features',
     disabled: false,
+    sameSite: true,
   },
   {
     id: 3,
     name: 'Try it',
-    href: '/#try',
+    href: '/try',
     title: 'Start using this awesome tool',
     rel: 'try',
     disabled: true,
+    sameSite: false,
   },
   {
     id: 4,
     name: 'Opinions',
-    href: '/#testimonials',
+    href: 'testimonials',
     title: 'Check what people say about us',
     rel: 'testimonials',
     disabled: false,
+    sameSite: true,
   }
 ]
 
@@ -221,7 +226,8 @@ class Navigation extends React.Component {
                 handleClick={this.setCurrentLink} 
                 status={current} 
                 name={item.name}
-                disabled={item.disabled} />
+                disabled={item.disabled}
+                sameSite={item.sameSite} />
               )}
             </Menu>
           </Navbar>

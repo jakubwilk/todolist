@@ -1,6 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
+import * as Scroll from 'react-scroll';
 import { Link } from 'react-router-dom';
+
+const SLink = Scroll.Link;
 
 const Item = styled.li`
   margin-left: 2rem;
@@ -21,11 +24,12 @@ const Item = styled.li`
   }
 `;
 
-const ItemLink = styled(Link)`
+const SItemLink = styled(SLink)`
   text-decoration: none;
   color: #2b2b2b;
   transition: all .1s ease-in-out;
   font-size: 2.5rem;
+  cursor: pointer;
 
   @media screen and (min-width: 960px) {
     font-size: 1rem;
@@ -40,10 +44,34 @@ const ItemLink = styled(Link)`
   }
 `;
 
-const MenuItem = ({ href, title, rel, handleClick, status, name, disabled }) => {
+const ItemLink = styled(Link)`
+  text-decoration: none;
+  color: #2b2b2b;
+  transition: all .1s ease-in-out;
+  font-size: 2.5rem;
+  cursor: pointer;
+
+  @media screen and (min-width: 960px) {
+    font-size: 1rem;
+  }
+
+  &:hover,
+  &:active,
+  &:focus,
+  &.current {
+    color: #706fd3;
+    outline: none;
+  }
+`;
+
+const MenuItem = ({ href, title, rel, handleClick, status, name, disabled, sameSite }) => {
   return (
     <Item className={disabled ? 'disabled' : ''}>
-      <ItemLink className={status === rel ? 'current' : ''} to={href} title={title} rel={rel} onClick={handleClick}>{name}</ItemLink>
+      {sameSite ? 
+        <SItemLink className={status === rel ? 'current' : ''} to={href} title={title} rel={rel} onClick={handleClick} spy={true} smooth={true}>{name}</SItemLink>
+        :
+        <ItemLink className={status === rel ? 'current' : ''} to={href} title={title} rel={rel} onClick={handleClick}>{name}</ItemLink>
+      }
     </Item>
   );
 }
