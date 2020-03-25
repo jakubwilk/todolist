@@ -46,9 +46,13 @@ const SectionTitle = styled.h2`
 
 const Content = styled.div`
   display: grid;
-  grid-template-columns: 50% 50%;
+  grid-template-columns: auto;
   grid-template-rows: auto;
   grid-gap: 2.5rem;
+
+  @media screen and (min-width: 960px) {
+    grid-template-columns: 50% 50%;
+  }
 `;
 
 const QAList = [
