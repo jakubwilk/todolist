@@ -7,15 +7,15 @@ import Features from "../features-component/Features";
 import Footer from "../footer-component/Footer";
 
 const HomePage = () => {
-  return (
-    <>
-      <Navigation />
-      <Home />
-      <About />
-      <Features />
-      <Footer />
-    </>
-  );
+    return (
+        <>
+            <Navigation/>
+            <Home/>
+            <About/>
+            <Features/>
+            <Footer/>
+        </>
+    );
 };
 
 export default HomePage;
