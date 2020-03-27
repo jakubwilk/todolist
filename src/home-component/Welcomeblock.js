@@ -1,5 +1,5 @@
-import React from 'react';
-import styled from 'styled-components';
+import React from "react";
+import styled from "styled-components";
 
 const Content = styled.div`
   position: relative;
@@ -61,6 +61,6 @@ const Welcomeblock = () => {
       </HomeCard>
     </Content>
   )
-}
+};
 
 export default Welcomeblock;

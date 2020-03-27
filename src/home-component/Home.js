@@ -1,6 +1,6 @@
-import React from 'react';
-import styled from 'styled-components';
-import background from '../utils/home-background.jpg';
+import React from "react";
+import styled from "styled-components";
+import background from "../utils/home-background.jpg";
 
 import Welcomeblock from './Welcomeblock';
 
@@ -38,6 +38,6 @@ const Home = () => {
       </Container>
     </HomeWrapper>
   );
-}
+};
 
 export default Home;

@@ -1,5 +1,7 @@
-import React from 'react';
-import styled from 'styled-components';
+import React from "react";
+import styled from "styled-components";
+
+import FeatureItem from './FeatureItem';
 
 const FeaturesWrapper = styled.section`
   padding-top: 5rem;
@@ -43,12 +45,12 @@ const SectionTitle = styled.h2`
 
 const Features = () => {
   return (
-    <FeaturesWrapper>
+    <FeaturesWrapper name="features">
       <Container>
         <SectionTitle>Features</SectionTitle>
       </Container>
     </FeaturesWrapper>
   )
-}
+};
 
 export default Features;

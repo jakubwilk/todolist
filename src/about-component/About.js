@@ -1,7 +1,7 @@
-import React from 'react';
-import styled from 'styled-components';
+import React from "react";
+import styled from "styled-components";
 
-import QuestionAndAnswer from './QuestionAndAnswer';
+import QuestionAndAnswer from "./QuestionAndAnswer";
 
 const AboutWrapper = styled.section`
   background-color: #f6f6f6;

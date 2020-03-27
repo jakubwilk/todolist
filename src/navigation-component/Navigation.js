@@ -1,6 +1,6 @@
-import React from 'react';
-import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import React from "react";
+import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 import MenuItem from './MenuItem';
 
@@ -193,13 +193,13 @@ class Navigation extends React.Component {
     this.setState({
       current: e.target.rel,
     });
-  }
+  };
 
   toggleMenu = () => {
     this.setState({
       display: !this.state.display
     })
-  }
+  };
 
   render() {
     const { current, display } = this.state;

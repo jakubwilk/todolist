@@ -1,7 +1,7 @@
-import React from 'react';
-import { createGlobalStyle } from 'styled-components';
-import { Switch, BrowserRouter, Route } from 'react-router-dom';
-import HomePage from './homepage-component/HomePage';
+import React from "react";
+import { createGlobalStyle } from "styled-components";
+import { Switch, BrowserRouter, Route } from "react-router-dom";
+import HomePage from "./homepage-component/HomePage";
 
 const AppStyle = createGlobalStyle`
   * {
@@ -50,6 +50,6 @@ const App = () => {
       </Switch>
     </BrowserRouter>
   )
-}
+};
 
 export default App;

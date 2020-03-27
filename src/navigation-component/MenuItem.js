@@ -1,7 +1,7 @@
-import React from 'react';
-import styled from 'styled-components';
-import * as Scroll from 'react-scroll';
-import { Link } from 'react-router-dom';
+import React from "react";
+import styled from "styled-components";
+import * as Scroll from "react-scroll";
+import { Link } from "react-router-dom";
 
 const SLink = Scroll.Link;
 
@@ -74,6 +74,6 @@ const MenuItem = ({ href, title, rel, handleClick, status, name, disabled, sameS
       }
     </Item>
   );
-}
+};
 
 export default MenuItem;

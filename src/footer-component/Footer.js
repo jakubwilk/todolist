@@ -1,5 +1,5 @@
-import React from 'react';
-import styled from 'styled-components';
+import React from "react";
+import styled from "styled-components";
 
 const FooterWrapper = styled.section`
   background-color: #2b2b2b;
@@ -50,6 +50,6 @@ const Footer = () => {
       </Container>
     </FooterWrapper>
   )
-}
+};
 
 export default Footer;
