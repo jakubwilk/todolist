@@ -83,7 +83,7 @@ const FeaturesList = [
 
 const Features = () => {
     return (
-        <FeaturesWrapper name="features">
+        <FeaturesWrapper name={"features"}>
             <Container>
                 <SectionTitle>Features</SectionTitle>
                 <Content>

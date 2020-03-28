@@ -9,7 +9,7 @@ import Logo from './../utils/logo.png';
 const TopBar = styled.div`
     background-color: white;
     height: 70px;
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
@@ -166,7 +166,7 @@ const AnchorList = [
     {
         id: 3,
         name: 'Try it',
-        href: '/try',
+        href: '/signup',
         title: 'Start using this awesome tool',
         rel: 'try',
         disabled: true,
@@ -181,7 +181,7 @@ const AnchorList = [
         disabled: false,
         sameSite: true,
     }
-]
+];
 
 class Navigation extends React.Component {
     state = {

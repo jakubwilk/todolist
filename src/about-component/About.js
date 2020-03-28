@@ -75,7 +75,7 @@ const QAList = [
 
 const About = () => {
     return (
-        <AboutWrapper name='about'>
+        <AboutWrapper name={"about"}>
             <Container>
                 <SectionTitle>About us</SectionTitle>
                 <Content>

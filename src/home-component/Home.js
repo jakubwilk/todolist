@@ -32,7 +32,7 @@ const Container = styled.div`
 
 const Home = () => {
     return (
-        <HomeWrapper background={background}>
+        <HomeWrapper background={background} name={"home"}>
             <Container>
                 <Welcomeblock/>
             </Container>
