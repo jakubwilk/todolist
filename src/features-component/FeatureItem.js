@@ -31,7 +31,7 @@ const Icon = styled.div`
     & > svg {
         height: 80px;
     }
-    
+
     @media screen and (min-width: 768px) {
         width: 160px;
         height: 160px;
