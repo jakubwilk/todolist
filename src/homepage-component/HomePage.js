@@ -4,8 +4,9 @@ import Navigation from "../navigation-component/Navigation";
 import Home from "../home-component/Home";
 import About from "../about-component/About";
 import Features from "../features-component/Features";
-import Footer from "../footer-component/Footer";
+import Banner from "../banner-component/Banner";
 import Opinions from "../opinions-component/Opinions";
+import Footer from "../footer-component/Footer";
 
 const HomePage = () => {
     return (
@@ -14,6 +15,7 @@ const HomePage = () => {
             <Home/>
             <About/>
             <Features/>
+            <Banner/>
             <Opinions/>
             <Footer/>
         </>
