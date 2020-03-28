@@ -43,6 +43,21 @@ const Container = styled.div`
 const Content = styled.div`
     position: relative;
     z-index: 10;
+    text-align: center;
+`;
+
+const SectionTitle = styled.h2`
+    font-size: 4rem;
+    margin: 0;
+    color: white;
+    position: relative;
+    z-index: 1;
+`;
+
+const SectionDescription = styled.p`
+  margin-bottom: 0;
+  color: rgba(255,255,255, .85);
+  font-size: 1.5rem;
 `;
 
 const Banner = () => {
@@ -51,7 +66,8 @@ const Banner = () => {
         <BannerWrapper>
             <Container>
                 <Content>
-                    Banner
+                    <SectionTitle>Just try now</SectionTitle>
+                    <SectionDescription>Don't waste your time for another {`ToDo`} tools and choose us!</SectionDescription>
                 </Content>
             </Container>
         </BannerWrapper>
