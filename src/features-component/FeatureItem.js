@@ -4,6 +4,8 @@ import styled from "styled-components";
 const Content = styled.article`
     display: flex;
     align-items: center;
+    position: relative;
+    z-index: 10;
     
     &:nth-child(even) {
         flex-direction: row-reverse;
@@ -16,18 +18,24 @@ const Content = styled.article`
 `;
 
 const Icon = styled.div`
+    width: 80px;
+    height: 80px;
+    padding: 1rem;
     border-radius: 5px;
     background-color: white;
     box-shadow: -10px 10px 0px rgba(0,0,0,.05);
-    padding: 2rem;
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 160px;
-    height: 160px;
     
     & > svg {
         height: 80px;
+    }
+    
+    @media screen and (min-width: 768px) {
+        width: 160px;
+        height: 160px;
+        padding: 2rem;
     }
 `;
 
