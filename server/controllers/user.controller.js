@@ -1,12 +1,12 @@
 const Router = require('express');
-const passport = require('passport')
+const { body } = require('express-validator');
 const userService = require('./../services/user.service');
 
 module.exports = {
   create() {
     const api = Router();
 
-    api.post('/register', userService.registerUser); 
+    api.post('/register', [body('email').trim(), body('password').trim().escape()], userService.registerUser); 
 
     return api;
   },
@@ -14,7 +14,7 @@ module.exports = {
   login() {
     const api = Router();
 
-    api.post('/login', passport.authenticate('local', { session: false }), userService.loginUser);
+    api.post('/login', [body('email').trim(), body('password').trim().escape()], userService.loginUser);
 
     return api;
   }

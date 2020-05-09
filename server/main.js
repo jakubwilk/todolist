@@ -2,7 +2,6 @@ const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
-const passport = require('./config/passport');
 const cookieParser = require('cookie-parser');
 
 const auth = require('./controllers/user.controller');
@@ -20,8 +19,6 @@ const bootstrap = () => {
   app.use(cookieParser());
   app.use(bodyParser.urlencoded({ extended: false }));
   app.use(bodyParser.json());
-
-  passport.localPassport();
 
   mongoose.connect(uri, { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true });
   const connection = mongoose.connection;
