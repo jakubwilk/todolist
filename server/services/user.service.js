@@ -9,7 +9,7 @@ async function findUser(email) {
 }
 
 const emailValidation = email => {
-  const regex = /^\w+([\.-]?\w+)+@\w+([\.:]?\w+)+(\.[a-zA-Z0-9]{2,3})+$/;
+  const regex = /^\w+([\\.-]?\w+)+@\w+([\\.:]?\w+)+(\.[a-zA-Z0-9]{2,3})+$/;
   if (!email.match(regex)) {
     return 'Incorrect email address';
   }
