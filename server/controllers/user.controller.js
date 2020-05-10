@@ -1,12 +1,11 @@
 const Router = require('express');
-const { body } = require('express-validator');
-const userService = require('./../services/user.service');
+const { userValidationRules, registerUser, loginUser, checkToken } = require('./../services/user.service');
 
 module.exports = {
   create() {
     const api = Router();
 
-    api.post('/register', [body('email').trim(), body('password').trim().escape()], userService.registerUser); 
+    api.post('/register', userValidationRules(), registerUser); 
 
     return api;
   },
@@ -14,8 +13,16 @@ module.exports = {
   login() {
     const api = Router();
 
-    api.post('/login', [body('email').trim(), body('password').trim().escape()], userService.loginUser);
+    api.post('/login', userValidationRules(), loginUser);
 
     return api;
-  }
+  },
+
+  verify() {
+    const api = Router();
+
+    api.get('/token', checkToken);
+
+    return api;
+  },
 }

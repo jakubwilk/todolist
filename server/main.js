@@ -29,6 +29,7 @@ const bootstrap = () => {
 
   app.use('/api/auth', auth.create());
   app.use('/api/auth', auth.login());
+  app.use('/api/auth', auth.verify());
 
   app.listen(port, () => {
     console.log(`[SERVER]: Server is runing on port: ${port}`);
