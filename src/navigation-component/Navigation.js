@@ -166,10 +166,10 @@ const AnchorList = [
     {
         id: 3,
         name: 'Try it',
-        href: '/signup',
+        href: '/login',
         title: 'Start using this awesome tool',
         rel: 'try',
-        disabled: true,
+        disabled: false,
         sameSite: false,
     },
     {

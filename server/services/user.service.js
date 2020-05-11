@@ -97,10 +97,10 @@ module.exports = {
 
     const auth = await jwt.verify(token.auth_token, process.env['JWT_HASH'], (err, decoded) => {
       if (err) {
-        return false;
+        return res.json({ status: 401, type: 'error', message: 'Invalid JWT' });
       }
 
-      return true;
+      return res.json({ status: 200, typr: 'success', message: decoded.id });
     });
 
     return auth;
