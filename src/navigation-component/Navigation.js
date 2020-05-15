@@ -185,7 +185,7 @@ const AnchorList = [
 
 class Navigation extends React.Component {
     state = {
-        current: 'home',
+        current: "home",
         display: true,
     };
 
@@ -209,15 +209,15 @@ class Navigation extends React.Component {
                 <Container>
                     <Navbar>
                         <SiteHeading>
-                            <Link to='/' title='Back to homepage'>
-                                <img src={Logo} alt='todoLIST - Your ToDo list'/>
+                            <Link to='/' title="Back to homepage">
+                                <img src={Logo} alt="todoLIST - Your ToDo list"/>
                             </Link>
                         </SiteHeading>
                         <MenuButton onClick={this.toggleMenu}>
                             <MenuButtonLine></MenuButtonLine>
                             Menu
                         </MenuButton>
-                        <Menu className={display ? 'desktop' : 'mobile'}>
+                        <Menu className={display ? "desktop" : "mobile"}>
                             {AnchorList.map(item => <MenuItem
                                 key={item.id}
                                 href={item.href}
