@@ -30,13 +30,13 @@ module.exports = {
     }
 
     if (errorsMessage.length !== 0) {
-      return res.json({ status: 401, type: 'error', message: errorsMessage });
+      return res.json({ status: 200, type: 'error', message: errorsMessage });
     }
 
     const user = await findUser(email);
 
     if (!user) {
-      return res.json({ status: 401, type: 'error', message: ['Account with this email address not exists'] });
+      return res.json({ status: 200, type: 'error', message: ['Account with this email address not exists'] });
     }
 
     const token = jwt.sign({ id: user._id }, process.env['JWT_HASH'], { expiresIn: 86400 });
@@ -47,11 +47,11 @@ module.exports = {
       }
 
       if (!result) {
-        return res.json({ status: 401, type: 'error', message: ['Wrong password'] });
+        return res.json({ status: 200, type: 'error', message: ['Wrong password'] });
       } 
 
       return res.cookie('auth_token', token, { maxAge: 1000 * 60 * 1440, httpOnly: true,  })
-                .json({ status: 201, type: 'success', message: ['User successfully logged'] });
+                .json({ status: 200, type: 'success', message: ['User successfully logged'] });
     });
   },
 
@@ -67,11 +67,11 @@ module.exports = {
     }
 
     if (errorsMessage.length !== 0) {
-      return res.json({ status: 401, type: 'error', message: errorsMessage });
+      return res.json({ status: 200, type: 'error', message: errorsMessage });
     }
 
     if (user) {
-      return res.json({ status: 401, type: 'error', message: ['Email is already in use'] });
+      return res.json({ status: 200, type: 'error', message: ['Email is already in use'] });
     }
     
     const member = new User({ email: email, password: password });

@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import styled from "styled-components";
+import ClockLoader from "react-spinners/ClockLoader";
 
 import FormInput from "./../utils/FormInput";
+import ValidationMessage from "./../utils/ValidationMessage";
 
 class LoginForm extends Component {
   constructor() {
@@ -16,8 +18,12 @@ class LoginForm extends Component {
   }
 
   render() {
+    if (this.props.loading) {
+      return <ClockLoader loading={this.props.loading} color={"#706fd3"} size={50} />
+    }
     return (
       <form onSubmit={this.handleSubmit}>
+        {this.props.resType === "error" ? <ValidationMessage type={this.props.resType} message={this.props.resMessage} /> : null}
         <div>
           <label>Email</label>
           <FormInput type="text" name="email" value={this.props.email} handleChange={this.props.updateState} placeholder="Enter your email address" />
