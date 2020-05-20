@@ -2,6 +2,7 @@ import React from "react";
 import { createGlobalStyle } from "styled-components";
 import { Switch, BrowserRouter, Route } from "react-router-dom";
 import HomePage from "./homepage-component/HomePage";
+import Register from "./register-component/Register";
 import AuthGuard from "./utils/AuthGuard";
 
 const AppStyle = createGlobalStyle`
@@ -47,6 +48,9 @@ const App = () => {
             <Switch>
                 <Route path="/" exact>
                     <HomePage />
+                </Route>
+                <Route path="/register">
+                    <Register />
                 </Route>
                 <Route path="/login">
                     <AuthGuard />
