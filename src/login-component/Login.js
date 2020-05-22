@@ -122,7 +122,7 @@ class Login extends React.Component {
 
         this.setState({ loading: true });
 
-        axios.post("http://localhost:44912/api/auth/login", { user })
+        axios.post("http://localhost:44912/api/auth/login", { user }, { withCredentials: true })
             .then(res => {
                 this.setState({ data: res.data, loading: false });
             })

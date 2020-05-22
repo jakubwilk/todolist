@@ -1,5 +1,6 @@
 import React from "react";
 import { Redirect } from "react-router-dom";
+import axios from "axios";
 import ClockLoader from "react-spinners/ClockLoader";
 import styled from "styled-components";
 import Dashboard from "../dashboard-component/Dashboard";
@@ -25,8 +26,7 @@ class AuthGuard extends React.Component {
     }
 
     componentDidMount = () => {
-        fetch("http://localhost:44912/api/auth/token", { method: "GET", headers: { "Content-Type": "application/json" } })
-            .then(res => res.json())
+        axios.get("http://localhost:44912/api/auth/token")
             .then(res => {
                 if (res.status === 200) {
                     this.setState({ userId: res.message, loading: false });
@@ -36,7 +36,7 @@ class AuthGuard extends React.Component {
             })
             .catch(err => {
                 this.setState({ userId: null, loading: false });
-            })
+            });
     }
 
     render() {
