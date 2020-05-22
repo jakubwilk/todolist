@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
 import ClockLoader from "react-spinners/ClockLoader";
 import styled from "styled-components";
 import background from "../utils/auth-background.jpg";
@@ -114,19 +115,19 @@ class Login extends React.Component {
     }
 
     fetchData = () => {
-        const data = new FormData();
-        data.append('email', this.state.email);
-        data.append('password', this.state.password);
+        const user = {
+            email: this.state.email,
+            password: this.state.password
+        }
 
         this.setState({ loading: true });
-        fetch('http://localhost:44912/api/auth/login', 
-            { method: "POST", headers: { "Content-Type": "application/json" }, credentials: "same-origin", body: JSON.stringify(data) })
-            .then(res => res.json())
+
+        axios.post("http://localhost:44912/api/auth/login", { user })
             .then(res => {
-                this.setState({ data: res, loading: false });
+                this.setState({ data: res.data, loading: false });
             })
             .catch(err => {
-                this.setState({ data: err, loading: false });
+                this.setState({ data: err.data, loading: false });
             });
     }
 

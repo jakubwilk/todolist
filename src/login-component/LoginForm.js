@@ -35,6 +35,12 @@ const LoginButton = styled.input`
     outline: none;
     background-color: #2b2b2b;
   }
+
+  &[disabled] {
+    user-select: none;
+    pointer-events: none;
+    opacity: .6;
+  }
 `;
 
 class LoginForm extends Component {
@@ -52,7 +58,7 @@ class LoginForm extends Component {
   render() {
     return (
       <PageForm onSubmit={this.handleSubmit}>
-        {this.props.resType === "error" && !this.props.loading ? <ValidationMessage type={this.props.resType} message={this.props.resMessage} /> : null}
+        {this.props.resType !== undefined && !this.props.loading ? <ValidationMessage type={this.props.resType} message={this.props.resMessage} /> : null}
         <FormGroup>
           <FormLabel htmlFor="email">Email Address</FormLabel>
           <FormInput type="text" name="email" id="email" value={this.props.email} handleChange={this.props.updateState} placeholder="Enter your email address" />
@@ -61,7 +67,11 @@ class LoginForm extends Component {
           <FormLabel htmlFor="password">Password</FormLabel>
           <FormInput type="password" name="password" id="password" value={this.props.password} handleChange={this.props.updateState} placeholder="Enter your password" />
         </FormGroup>
-        <LoginButton type="submit" value="Login" />
+        {this.props.email === "" || this.props.password === "" ?
+          <LoginButton type="submit" value="Login" disabled />
+          :
+          <LoginButton type="submit" value="Login" />
+        }
       </PageForm>
     );
   }

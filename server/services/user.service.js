@@ -11,16 +11,16 @@ async function findUser(email) {
 
 const userValidationRules = () => {
   return [
-    body('email', 'Incorrect email address').isEmail().escape().trim(),
-    body('password', 'Password contains not allowed characters').escape().trim(),
+    body('email', 'Incorrect email address\n').not().isEmail().escape().trim(),
+    body('password', 'Password contains not allowed characters\n').not().escape().trim(),
   ]
 }
 
 module.exports = {
   userValidationRules,
 
-  async loginUser(req, res, next) {
-    const { email, password } = req.body;
+  async loginUser(req, res) {
+    const { email, password } = req.body.user;
 
     const errors = validationResult(req);
     const errorsMessage = [];
@@ -55,8 +55,9 @@ module.exports = {
     });
   },
 
-  async registerUser(req, res, next) {
-    const { email, password } = req.body;
+  async registerUser(req, res) {
+    const { email, password } = req.body.user;
+
     const user = await findUser(email);
 
     const errors = validationResult(req);
@@ -84,11 +85,11 @@ module.exports = {
       member.password = hash;
       member.save()
         .then(user => {
-          return res.json({ status: 201, type: 'success', message: ['User created successfully'] });
+          return res.json({ status: 201, type: 'success', message: ['User created successfully. Now you can go to the login page'] });
         })
         .catch(err => {
           return res.json({ status: 500, type: 'error', message: ['Error while processing your query'] });
-        })
+        }); 
     });
   },
 
