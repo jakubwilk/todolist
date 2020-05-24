@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import ClockLoader from "react-spinners/ClockLoader";
 import styled from "styled-components";
-import background from "../utils/auth-background.jpg";
+import background from "../utils/login-background.jpg";
 
 import LoginForm from "./LoginForm";
 
