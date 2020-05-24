@@ -106,4 +106,10 @@ module.exports = {
 
     return auth;
   },
+
+  async getUserData(req, res) {
+
+    const uid = req.params;
+    console.log(uid);
+  }
 }

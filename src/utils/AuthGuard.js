@@ -3,7 +3,7 @@ import { Redirect } from "react-router-dom";
 import axios from "axios";
 import ClockLoader from "react-spinners/ClockLoader";
 import styled from "styled-components";
-import Dashboard from "../dashboard-component/Dashboard";
+import Dashboard from "../dashboardpage-component/DashboardPage";
 import Login from "../login-component/Login";
 
 const SpinnerLayer = styled.div`
@@ -51,7 +51,7 @@ class AuthGuard extends React.Component {
             ) : (
                 <>
                     <Redirect from={`/login`} to={`/dashboard`} />
-                    <Dashboard />
+                    <Dashboard userId={userId} />
                 </>
             );
         } else {

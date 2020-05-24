@@ -1,5 +1,5 @@
 const Router = require('express');
-const { userValidationRules, registerUser, loginUser, checkToken } = require('./../services/user.service');
+const { userValidationRules, registerUser, loginUser, checkToken, getUserData } = require('./../services/user.service');
 
 module.exports = {
   create() {
@@ -22,6 +22,14 @@ module.exports = {
     const api = Router();
 
     api.get('/token', checkToken);
+
+    return api;
+  },
+
+  user() {
+    const api = Router();
+
+    api.get('/user/:id', getUserData);
 
     return api;
   },
