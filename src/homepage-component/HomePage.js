@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import Navigation from "../navigation-component/Navigation";
 import Home from "../home-component/Home";
@@ -9,6 +9,10 @@ import Opinions from "../opinions-component/Opinions";
 import Footer from "../footer-component/Footer";
 
 const HomePage = () => {
+    useEffect(() => {
+        document.title = "ToDo List - Your new TODO tool";
+    }, []);
+
     return (
         <>
             <Navigation/>

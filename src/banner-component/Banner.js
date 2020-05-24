@@ -61,7 +61,6 @@ const SectionDescription = styled.p`
 `;
 
 const Banner = () => {
-    console.log(background);
     return (
         <BannerWrapper>
             <Container>
