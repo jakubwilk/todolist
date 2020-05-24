@@ -7,6 +7,10 @@ This is landing page for TODO app and was bootstrapped with [Create React App](h
 
 ![Homepage home section](https://i.imgur.com/WCq276Q.png)
 
+![Login page](https://i.imgur.com/gNMTBVP.png)
+
+![Register page](https://i.imgur.com/Hrz2snJ.png)
+
 ## Available Scripts
 
 In the project directory, you can run:
