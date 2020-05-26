@@ -27,6 +27,7 @@ const bootstrap = () => {
     console.log(`[SERVER]: Mongo database connection established successfully`);
   });
 
+  app.use('/uploads', express.static(__dirname + '/uploads'));
   app.use('/api/auth', auth.create());
   app.use('/api/auth', auth.login());
   app.use('/api/auth', auth.verify());

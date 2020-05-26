@@ -3,12 +3,6 @@ const bcrypt = require('bcrypt');
 const { body, validationResult } = require('express-validator')
 const User = require('../models/user.model');
 
-async function findUser(email) { 
-  const user = await User.findOne({ email: email });
-
-  return user;
-}
-
 const userValidationRules = () => {
   return [
     body('email', 'Incorrect email address\n').not().isEmail().escape().trim(),
@@ -33,7 +27,7 @@ module.exports = {
       return res.send({ status: 200, type: 'error', message: errorsMessage });
     }
 
-    const user = await findUser(email);
+    const user = await User.findOne({ email: email });
 
     if (!user) {
       return res.send({ status: 200, type: 'error', message: ['Account with this email address not exists'] });
@@ -58,7 +52,7 @@ module.exports = {
   async registerUser(req, res, next) {
     const { email, password } = req.body.user;
 
-    const user = await findUser(email);
+    const user = await User.findOne({ email: email });
 
     const errors = validationResult(req);
     const errorsMessage = [];
@@ -75,7 +69,7 @@ module.exports = {
       return res.send({ status: 200, type: 'error', message: ['Email is already in use'] });
     }
     
-    const member = new User({ email: email, password: password });
+    const member = new User({ first_name: null, last_name: null, email: email, password: password, avatar: "http://localhost:44912/uploads/avatardefault.png", description: null, blocked: false });
 
     bcrypt.hash(member.password, parseInt(process.env['HASH_ROUNDS']), (err, hash) => {
       if (err) {
@@ -108,8 +102,14 @@ module.exports = {
   },
 
   async getUserData(req, res) {
-
     const uid = req.params;
-    console.log(uid);
+    
+    const user = await User.findById({ _id: uid.id });
+    
+    if (user) {
+      return res.send({ status: 200, type: 'success', message: { username: user.email, avatar: user.avatar } });
+    }
+
+    return res.send({ status: 200, type: 'error', message: { username: 'No username' } });
   }
 }
