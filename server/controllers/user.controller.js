@@ -1,36 +1,56 @@
 const Router = require('express');
-const { userValidationRules, registerUser, loginUser, checkToken, getUserData } = require('./../services/user.service');
+const { userValidationRules, registerUser, loginUser, checkToken, getUserData, logoutUser } = require('./../services/user.service');
 
 module.exports = {
-  create() {
-    const api = Router();
+	user() {
+		const api = Router();
 
-    api.post('/register', userValidationRules(), registerUser); 
+		api.post('/register', userValidationRules(), registerUser); 
+		api.post('/login', userValidationRules(), loginUser);
+		api.get('/token', checkToken);
+		api.get('/user/:id', getUserData);
+		api.get('/logout', logoutUser);
 
-    return api;
-  },
+		return api;
+	},
 
-  login() {
-    const api = Router();
+//   	create() {
+//     	const api = Router();
 
-    api.post('/login', userValidationRules(), loginUser);
+//     	api.post('/register', userValidationRules(), registerUser); 
 
-    return api;
-  },
+//     	return api;
+//   	},
 
-  verify() {
-    const api = Router();
+//   login() {
+//     const api = Router();
 
-    api.get('/token', checkToken);
+//     api.post('/login', userValidationRules(), loginUser);
 
-    return api;
-  },
+//     return api;
+//   },
 
-  user() {
-    const api = Router();
+//   verify() {
+//     const api = Router();
 
-    api.get('/user/:id', getUserData);
+//     api.get('/token', checkToken);
 
-    return api;
-  },
+//     return api;
+//   },
+
+//   user() {
+//     const api = Router();
+
+//     api.get('/user/:id', getUserData);
+
+//     return api;
+//   },
+
+//   logout() {
+//     const api = Router();
+
+//     api.post('/logout', logoutUser);
+
+//     return api;
+//   }
 }

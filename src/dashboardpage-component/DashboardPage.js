@@ -1,11 +1,15 @@
 import React from "react";
+import axios from "axios";
+import { Redirect } from "react-router-dom";
 import DashboardNavigation from "./../dashboard-component/DashboardNavigation";
+import EditUser from "./../user-component/EditUser";
 
 class DashboardPage extends React.Component {
     state = {
         editProfile: false,
         createList: false,
         createTask: false,
+        logout: false,
         loading: false
     };
 
@@ -19,13 +23,29 @@ class DashboardPage extends React.Component {
         this.setState({ [attrName]: attrValue });
     }
 
+    logoutUser = () => {
+        this.setState({ loading: true });
+        axios.get("http://localhost:44912/api/auth/logout/", { withCredentials: true })
+            .then(res => {
+                this.setState({ logout: true, loading: false });
+            })
+            .catch(err => {
+                this.setState({ logout: true, loading: false });
+            });
+    }
+
 	render() {
-        return (
-            <>
-                <DashboardNavigation userId={this.props.userId} />
-                <h1>Dashboard</h1>
-            </>
-        );
+        if (this.state.logout) {
+            return <Redirect to="/" />
+        } else {
+            return (
+                <>
+                    <DashboardNavigation userId={this.props.userId} updateState={this.updateState} logoutAction={this.logoutUser} />
+                    <h1>Dashboard</h1>
+                    {this.state.editProfile ? <EditUser /> : null}
+                </>
+            );
+        }
     }
 }
 

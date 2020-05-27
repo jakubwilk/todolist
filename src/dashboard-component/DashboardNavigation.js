@@ -129,15 +129,26 @@ class DashboardNavigation extends React.Component {
             <NavHeader>
                 <NavContainer>
                     <Navbar>
-                        {this.state.loading ? null : <WelcomeHeader>Welcome, <UserAvatar src={this.state.avatar} alt={this.state.username} /> <strong>{this.state.username}</strong></WelcomeHeader>}
-                        <Menu>
-                            <MenuItem>
-                                <MenuButton>Edit profile</MenuButton>
-                            </MenuItem>
-                            <MenuItem>
-                                <MenuButton className="logout">Logout</MenuButton>
-                            </MenuItem>
-                        </Menu>
+                        <WelcomeHeader>Welcome, {!this.state.loading ? 
+                            <>
+                                <UserAvatar src={this.state.avatar} alt={this.state.username} /> 
+                                <strong>{this.state.username}</strong>
+                            </> 
+                            : 
+                            null 
+                        }</WelcomeHeader>
+                        <Menu> {!this.state.loading ? 
+                            <>
+                                <MenuItem>
+                                    <MenuButton data-action="editProfile" data-value="true" onClick={this.props.updateState}>Edit profile</MenuButton>
+                                </MenuItem>
+                                <MenuItem>
+                                    <MenuButton className="logout" onClick={this.props.logoutAction}>Logout</MenuButton>
+                                </MenuItem>
+                            </>
+                            :
+                            null
+                        }</Menu>
                     </Navbar>
                 </NavContainer>
             </NavHeader>
