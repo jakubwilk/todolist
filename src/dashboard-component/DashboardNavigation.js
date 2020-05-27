@@ -75,11 +75,11 @@ const MenuButton = styled.button`
     background-color: #706fd3;
     padding: .35rem 1.5rem;
     color: #fff;
+    transition: all .1s ease-in-out;
 
     &:hover,
     &:focus {
         outline: none;
-        transition: all .1s ease-in-out;
         background-color: #fff;
         color: #2b2b2b;
     }
@@ -140,7 +140,7 @@ class DashboardNavigation extends React.Component {
                         <Menu> {!this.state.loading ? 
                             <>
                                 <MenuItem>
-                                    <MenuButton data-action="editProfile" data-value="true" onClick={this.props.updateState}>Edit profile</MenuButton>
+                                    <MenuButton data-action="editProfile" onClick={this.props.updateState}>Edit profile</MenuButton>
                                 </MenuItem>
                                 <MenuItem>
                                     <MenuButton className="logout" onClick={this.props.logoutAction}>Logout</MenuButton>

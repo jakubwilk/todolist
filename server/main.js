@@ -33,6 +33,7 @@ const bootstrap = () => {
 	app.use('/api/auth', auth.user());
 	app.use('/api/auth', auth.user());
 	app.use('/api/auth', auth.user());
+	app.use('/api/auth', auth.user());
 
 	app.listen(port, () => {
 		console.log(`[SERVER]: Server is runing on port: ${port}`);

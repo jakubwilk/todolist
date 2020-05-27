@@ -19,8 +19,7 @@ class DashboardPage extends React.Component {
 
     updateState = (e) => {
         const attrName = e.target.getAttribute('data-action');
-        const attrValue = e.target.getAttribute('data-value');
-        this.setState({ [attrName]: attrValue });
+        this.setState({ [attrName]: !this.state[attrName] });
     }
 
     logoutUser = () => {
@@ -37,15 +36,15 @@ class DashboardPage extends React.Component {
 	render() {
         if (this.state.logout) {
             return <Redirect to="/" />
-        } else {
-            return (
-                <>
-                    <DashboardNavigation userId={this.props.userId} updateState={this.updateState} logoutAction={this.logoutUser} />
-                    <h1>Dashboard</h1>
-                    {this.state.editProfile ? <EditUser /> : null}
-                </>
-            );
         }
+
+        return (
+            <>
+                <DashboardNavigation userId={this.props.userId} updateState={this.updateState} logoutAction={this.logoutUser} />
+                <h1>Dashboard</h1>
+                {this.state.editProfile ? <EditUser userId={this.props.userId} updateState={this.updateState} focus={this.state.editProfile} /> : null}
+            </>
+        );
     }
 }
 

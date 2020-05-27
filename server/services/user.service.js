@@ -116,5 +116,13 @@ module.exports = {
   	async logoutUser(req, res) {
 		res.clearCookie('auth_token', { maxAge: 0, httpOnly: true });
 		return res.send({ status: 200, type: 'success', message: ['User loged'] });
-  	}
+	},
+
+	async editUser(req, res) {
+		const uid = req.params;
+
+		const user = await User.findById({ _id: uid.id });
+
+		return res.send({ status: 200, type: 'success', user });
+	}
 }
