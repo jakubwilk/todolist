@@ -115,7 +115,7 @@ class DashboardNavigation extends React.Component {
 
     componentDidMount = () => {
         this.setState({ loading: true });
-        axios.get("http://localhost:44912/api/auth/user/" + this.props.userId, { withCredentials: true })
+        axios.get("http://localhost:44912/api/user/user/" + this.props.userId, { withCredentials: true })
             .then(res => {
                 this.setState({ username: res.data.message.username, avatar: res.data.message.avatar, loading: false });
             })

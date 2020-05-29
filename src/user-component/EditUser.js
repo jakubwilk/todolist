@@ -158,7 +158,7 @@ class EditUser extends React.Component {
 
 	componentDidMount = () => {
 		this.setState({ loading: true });
-		axios.get("http://localhost:44912/api/auth/edit/" + this.props.userId, { withCredentials: true })
+		axios.get("http://localhost:44912/api/user/edit/" + this.props.userId, { withCredentials: true })
 			.then(res => {
 				const user = res.data.user;
 				this.setState({ first_name: user.first_name, last_name: user.first_name, email: user.email, avatar: user.avatar, description: user.description, loading: false });
@@ -178,16 +178,18 @@ class EditUser extends React.Component {
 		document.removeEventListener("keyup", this.closeModalByESC, false);
 	}
 
-	editProfile = () => {
-		const user = {
-            first_name: this.state.first_name,
-			last_name: this.state.last_name,
-			email: this.state.email,
-			description: this.state.description
-		}
+	editProfile = (e) => {
+		e.preventDefault();
+
+		const user = new FormData();
+		user.append('first_name', this.state.first_name);
+		user.append('last_name', this.state.last_name);
+		user.append('email', this.state.email);
+		user.append('description', this.state.description);
+		user.append('file', this.state.file);
 		
 		this.setState({ loading: true });
-		axios.post("http://localhost:44912/api/auth/edit", { user }, { withCredentials: true })
+		axios.post("http://localhost:44912/api/user/edit", user, { withCredentials: true })
 			.then(res => {
 				console.log(res);
 				this.setState({ loading: false });
@@ -201,28 +203,30 @@ class EditUser extends React.Component {
 					<ModalHeader>
 						<ModalHeading><span>Edit</span> profile</ModalHeading>
 					</ModalHeader>
-					<ModalBody>
-						{this.state.loading ?
-							<SpinnerLayer>
-								<ClockLoader loading={this.props.loading} color={"#706fd3"} size={80} />
-							</SpinnerLayer>
-							:
-							<EditUserForm 
-								first_name={this.state.first_name} 
-								last_name={this.state.last_name} 
-								email={this.state.email} 
-								avatar={this.state.avatar} 
-								file={this.state.file}
-								description={this.state.description} 
-								updateData={this.updateData}
-								updateFile={this.updateFile}
-							/>
-						}
-					</ModalBody>
-					<ModalFooter>
-						<ButtonClose id="closeModal" data-action="editProfile" onClick={this.props.updateState}>Close</ButtonClose>
-						<ButtonSave onClick={this.editProfile}>Save</ButtonSave>
-					</ModalFooter>
+					<form>
+						<ModalBody>
+							{this.state.loading ?
+								<SpinnerLayer>
+									<ClockLoader loading={this.props.loading} color={"#706fd3"} size={80} />
+								</SpinnerLayer>
+								:
+								<EditUserForm 
+									first_name={this.state.first_name} 
+									last_name={this.state.last_name} 
+									email={this.state.email} 
+									avatar={this.state.avatar} 
+									file={this.state.file}
+									description={this.state.description} 
+									updateData={this.updateData}
+									updateFile={this.updateFile}
+								/>
+							}
+						</ModalBody>
+						<ModalFooter>
+							<ButtonClose id="closeModal" data-action="editProfile" onClick={this.props.updateState}>Close</ButtonClose>
+							<ButtonSave onClick={this.editProfile}>Save</ButtonSave>
+						</ModalFooter>
+					</form>
 				</Modal>
 			</Overlay>
     	);

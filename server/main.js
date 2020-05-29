@@ -4,7 +4,8 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 
-const auth = require('./controllers/user.controller');
+const auth = require('./controllers/auth.controller');
+const user = require('./controllers/user.controller');
 
 require('dotenv').config();
 
@@ -29,6 +30,7 @@ const bootstrap = () => {
 
 	app.use('/uploads', express.static(__dirname + '/uploads'));
 	app.use('/api/auth', auth.user());
+	app.use('/api/user', user.user());
 
 	app.listen(port, () => {
 		console.log(`[SERVER]: Server is runing on port: ${port}`);

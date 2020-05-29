@@ -1,17 +1,26 @@
 const Router = require('express');
-const { userValidationRules, registerUser, loginUser, checkToken, getUserData, logoutUser, getEditUser, postEditUser } = require('./../services/user.service');
+const multer = require('multer');
+const { getUserData, getEditUser, postEditUser } = require('./../services/user.service');
+
+const storage = multer.diskStorage({
+    destination: function(req, file, cb) {
+		console.log(req.files);
+        cb(null, 'uploads/');
+     },
+    filename: function (req, file, cb) {
+        cb(null , Date.now() + '-' + file.originalname);
+    }
+});
+
+const upload = multer({ storage: storage });
 
 module.exports = {
 	user() {
 		const api = Router();
 
-		api.post('/register', userValidationRules(), registerUser); 
-		api.post('/login', userValidationRules(), loginUser);
-		api.get('/token', checkToken);
 		api.get('/user/:id', getUserData);
-		api.get('/logout', logoutUser);
 		api.get('/edit/:id', getEditUser);
-		api.post('/edit', postEditUser);
+		api.post('/edit', upload.single('file'), postEditUser);
 
 		return api;
 	},
