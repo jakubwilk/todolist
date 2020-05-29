@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
+const multer = require('multer');
 const { body, validationResult } = require('express-validator')
 const User = require('../models/user.model');
 
@@ -118,7 +119,7 @@ module.exports = {
 		return res.send({ status: 200, type: 'success', message: ['User loged'] });
 	},
 
-	async editUser(req, res) {
+	async getEditUser(req, res) {
 		const uid = req.params;
 
 		const user = await User.findById({ _id: uid.id });
@@ -128,5 +129,12 @@ module.exports = {
 		} else {
 			return res.send({ status: 401, type: 'error', message: 'No user' });
 		}
+	},
+
+	async postEditUser(req, res) {
+		const upload = multer({ dest: 'uploads/' });
+
+		console.log(req.body);
+		console.log(req.file);
 	}
 }

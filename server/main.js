@@ -29,11 +29,6 @@ const bootstrap = () => {
 
 	app.use('/uploads', express.static(__dirname + '/uploads'));
 	app.use('/api/auth', auth.user());
-	app.use('/api/auth', auth.user());
-	app.use('/api/auth', auth.user());
-	app.use('/api/auth', auth.user());
-	app.use('/api/auth', auth.user());
-	app.use('/api/auth', auth.user());
 
 	app.listen(port, () => {
 		console.log(`[SERVER]: Server is runing on port: ${port}`);

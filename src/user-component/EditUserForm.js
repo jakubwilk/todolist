@@ -4,7 +4,7 @@ import InputForm from "./../utils/FormInput";
 import FormFile from "../utils/FormFile";
 import FormTextarea from "./../utils/FormTextarea";
 
-const FormGrid = styled.div`
+const FormGrid = styled.form`
     display: grid;
     grid-template-columns: 100%;
     grid-template-rows: repeat(5, auto);
@@ -36,7 +36,7 @@ const UserAvatar = styled.div`
 
 const EditUserForm = ({ first_name, last_name, email, avatar, description, updateData, updateFile }) => {
     return (
-        <FormGrid>
+        <FormGrid enctype="multipart/form-dat">
             <UserAvatar>
                 <img src={avatar} alt={first_name} />
             </UserAvatar>

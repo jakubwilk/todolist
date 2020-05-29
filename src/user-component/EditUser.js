@@ -179,7 +179,19 @@ class EditUser extends React.Component {
 	}
 
 	editProfile = () => {
-		// send data for edit profile
+		const user = {
+            first_name: this.state.first_name,
+			last_name: this.state.last_name,
+			email: this.state.email,
+			description: this.state.description
+		}
+		
+		this.setState({ loading: true });
+		axios.post("http://localhost:44912/api/auth/edit", { user }, { withCredentials: true })
+			.then(res => {
+				console.log(res);
+				this.setState({ loading: false });
+			})
 	}
 
 	render() {
@@ -209,7 +221,7 @@ class EditUser extends React.Component {
 					</ModalBody>
 					<ModalFooter>
 						<ButtonClose id="closeModal" data-action="editProfile" onClick={this.props.updateState}>Close</ButtonClose>
-						<ButtonSave>Save</ButtonSave>
+						<ButtonSave onClick={this.editProfile}>Save</ButtonSave>
 					</ModalFooter>
 				</Modal>
 			</Overlay>
