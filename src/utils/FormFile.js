@@ -13,7 +13,7 @@ const FormLabel = styled.label`
   	color: #777;
 `;
 
-const Input = styled.input`
+const File = styled.input`
   	width: 100%;
   	max-width: 70%;
   	margin-left: auto;
@@ -34,13 +34,13 @@ const Input = styled.input`
   	}
 `;
 
-const FormInput = ({ labelFor, labelName, type, name, groupClass, value, handleChange, placeholder }) => {
+const FormFile = ({ labelFor, labelName, type, name, groupClass, value, handleChange, placeholder }) => {
   	return (
     	<FormGroup className={groupClass}>
 			<FormLabel htmlFor={labelFor}>{labelName}</FormLabel>
-			<Input type={type} name={name} id={name} value={value} onChange={handleChange} placeholder={placeholder} autoComplete="off" />
+			<File type={type} name={name} id={name} onChange={handleChange} autoComplete="off" />
 		</FormGroup>
   	);
 }
 
-export default FormInput;
+export default FormFile;

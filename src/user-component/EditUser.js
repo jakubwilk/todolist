@@ -1,6 +1,8 @@
 import React from "react";
 import axios from "axios";
 import styled from "styled-components";
+import ClockLoader from "react-spinners/ClockLoader";
+import EditUserForm from "./EditUserForm";
 
 const Overlay = styled.div`
 	position: fixed;
@@ -15,11 +17,25 @@ const Overlay = styled.div`
 	justify-content: center;
 `;
 
+const SpinnerLayer = styled.div`
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+    background-color: rgba(255,255,255, .65);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+`;
+
 const Modal = styled.div`
 	margin: 1.5rem;
 	overflow-y: auto;
 	position: relative;
 	z-index: 20;
+	width: 100%;
 
 	@media screen and (min-width: 768px) {
 		margin-top: 0;
@@ -55,8 +71,12 @@ const ModalHeading = styled.h2`
 `;
 
 const ModalBody = styled.section`
+	position: relative;
+	min-height: 150px;
 	background-color: white;
 	padding: 1rem 1.5rem;
+	overflow-y: auto;
+    max-height: 60vh;
 `;
 
 const ModalFooter = styled.footer`
@@ -64,6 +84,7 @@ const ModalFooter = styled.footer`
 	padding: 1rem 1.5rem;
 	border-bottom-left-radius: 5px;
 	border-bottom-right-radius: 5px;
+	border-top: 1px solid #f1f1f1;
 	display: flex;
 	justify-content: flex-end;
 
@@ -109,13 +130,12 @@ class EditUser extends React.Component {
 		super();
 
 		this.state = {
-			data: {
-				first_name: '',
-				last_name: '',
-				email: '',
-				avatar: '',
-				description: ''
-			},
+			first_name: "",
+			last_name: "",
+			email: "",
+			avatar: "",
+			file: [],
+			description: "",
 			loading: false
 		};
 
@@ -126,6 +146,14 @@ class EditUser extends React.Component {
 		if (event.keyCode === 27) {
 			document.querySelector("#closeModal").click();
 		}
+	}
+
+	updateFile = (e) => {
+		this.setState({ [e.target.name]: e.target.files[0], avatar: e.target.files.length > 0 ? URL.createObjectURL(e.target.files[0]) : "http://localhost:44912/uploads/avatardefault.png" });
+	}
+
+	updateData = (e) => {
+		this.setState({ [e.target.name]: e.target.value });
 	}
 
 	componentDidMount = () => {
@@ -156,19 +184,35 @@ class EditUser extends React.Component {
 
 	render() {
 		return (
-			<>
-				<Overlay></Overlay>
+			<Overlay>
 				<Modal>
 					<ModalHeader>
 						<ModalHeading><span>Edit</span> profile</ModalHeading>
 					</ModalHeader>
-					<ModalBody></ModalBody>
+					<ModalBody>
+						{this.state.loading ?
+							<SpinnerLayer>
+								<ClockLoader loading={this.props.loading} color={"#706fd3"} size={80} />
+							</SpinnerLayer>
+							:
+							<EditUserForm 
+								first_name={this.state.first_name} 
+								last_name={this.state.last_name} 
+								email={this.state.email} 
+								avatar={this.state.avatar} 
+								file={this.state.file}
+								description={this.state.description} 
+								updateData={this.updateData}
+								updateFile={this.updateFile}
+							/>
+						}
+					</ModalBody>
 					<ModalFooter>
 						<ButtonClose id="closeModal" data-action="editProfile" onClick={this.props.updateState}>Close</ButtonClose>
 						<ButtonSave>Save</ButtonSave>
 					</ModalFooter>
 				</Modal>
-			</>
+			</Overlay>
     	);
   	}
 }

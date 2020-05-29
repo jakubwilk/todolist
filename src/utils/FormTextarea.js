@@ -13,8 +13,11 @@ const FormLabel = styled.label`
   	color: #777;
 `;
 
-const Input = styled.input`
+const Textarea = styled.textarea`
   	width: 100%;
+    min-height: 47px;
+    height: 100px;
+    max-height: 100px;
   	max-width: 70%;
   	margin-left: auto;
   	margin-right: auto;
@@ -34,13 +37,13 @@ const Input = styled.input`
   	}
 `;
 
-const FormInput = ({ labelFor, labelName, type, name, groupClass, value, handleChange, placeholder }) => {
+const FormTextarea = ({ labelFor, labelName, name, groupClass, value, handleChange, placeholder }) => {
   	return (
     	<FormGroup className={groupClass}>
 			<FormLabel htmlFor={labelFor}>{labelName}</FormLabel>
-			<Input type={type} name={name} id={name} value={value} onChange={handleChange} placeholder={placeholder} autoComplete="off" />
+			<Textarea name={name} id={name} value={value} onChange={handleChange} placeholder={placeholder} autoComplete="off" />
 		</FormGroup>
   	);
 }
 
-export default FormInput;
+export default FormTextarea;

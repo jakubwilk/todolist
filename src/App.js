@@ -39,6 +39,56 @@ const AppStyle = createGlobalStyle`
         font-size: 1rem;
         font-family: 'Baloo 2', cursive;
     }
+
+    .editprofile {
+        text-align: center;
+
+        & > input, textarea {
+            max-width: 100%;
+        }
+
+        &-file {
+            @media screen and (min-width: 768px) {
+                grid-column: 3 / span 6;
+                grid-row: 1;
+                text-align: left;
+            }
+        }
+
+        &-email {
+            @media screen and (min-width: 768px) {
+                grid-column: 3 / span 6;
+                grid-row: 2;
+                text-align: left;
+            }
+        }
+
+        &-description {
+            @media screen and (min-width: 768px) {
+                grid-column: 1 / span 6;
+                grid-row: 3;
+                text-align: left;
+            }
+        }
+
+        &-first-name {
+            @media screen and (min-width: 768px) {
+                grid-column: 1 / span 3;
+                grid-row: 4;
+                text-align: left;
+                margin-right: 12px;
+            }
+        }
+
+        &-last-name {
+            @media screen and (min-width: 768px) {
+                grid-column: 4 / span 6;
+                grid-row: 4;
+                text-align: left;
+                margin-left: 12px;
+            }
+        }
+    }
 `;
 
 const App = () => {

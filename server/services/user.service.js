@@ -69,7 +69,7 @@ module.exports = {
       		return res.send({ status: 200, type: 'error', message: ['Email is already in use'] });
     	}
     
-    	const member = new User({ first_name: null, last_name: null, email: email, password: password, avatar: "http://localhost:44912/uploads/avatardefault.png", description: null, blocked: false });
+    	const member = new User({ first_name: "", last_name: "", email: email, password: password, avatar: "http://localhost:44912/uploads/avatardefault.png", description: "", blocked: false });
 
     	bcrypt.hash(member.password, parseInt(process.env['HASH_ROUNDS']), (err, hash) => {
       		if (err) {
@@ -123,6 +123,10 @@ module.exports = {
 
 		const user = await User.findById({ _id: uid.id });
 
-		return res.send({ status: 200, type: 'success', user });
+		if (user) {
+			return res.send({ status: 200, type: 'success', user });
+		} else {
+			return res.send({ status: 401, type: 'error', message: 'No user' });
+		}
 	}
 }
