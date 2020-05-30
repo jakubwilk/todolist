@@ -69,7 +69,7 @@ module.exports = {
       		return res.send({ status: 200, type: 'error', message: ['Email is already in use'] });
     	}
     
-    	const member = new User({ first_name: "", last_name: "", email: email, password: password, avatar: "http://localhost:44912/uploads/avatardefault.png", description: "", blocked: false });
+    	const member = new User({ first_name: '', last_name: '', email: email, password: password, avatar: 'http://localhost:44912/uploads/avatardefault.png', description: '', blocked: false });
 
     	bcrypt.hash(member.password, parseInt(process.env['HASH_ROUNDS']), (err, hash) => {
       		if (err) {
@@ -95,7 +95,7 @@ module.exports = {
         		return res.send({ status: 401, type: 'error', message: 'Invalid JWT' });
       		}
 
-      		return res.send({ status: 200, typr: 'success', message: decoded.id });
+      		return res.send({ status: 200, type: 'success', message: decoded.id });
     	});
 
     	return auth;

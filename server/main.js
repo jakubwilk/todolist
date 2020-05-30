@@ -3,6 +3,7 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
+const fileUpload = require('express-fileupload');
 
 const auth = require('./controllers/auth.controller');
 const user = require('./controllers/user.controller');
@@ -20,6 +21,7 @@ const bootstrap = () => {
 	app.use(express.json());
 	app.use(bodyParser.urlencoded({ extended: false }));
 	app.use(bodyParser.json());
+	app.use(fileUpload());
 
 	mongoose.connect(uri, { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true });
 	const connection = mongoose.connection;

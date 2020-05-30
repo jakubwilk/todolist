@@ -123,6 +123,12 @@ const ButtonSave = styled.button`
 		outline: none;
 		background-color: #5959a9;
 	}
+
+	&[disabled] {
+		user-select: none;
+		pointer-events: none;
+		opacity: .6;
+	}
 `;
 
 class EditUser extends React.Component {
@@ -182,6 +188,7 @@ class EditUser extends React.Component {
 		e.preventDefault();
 
 		const user = new FormData();
+		user.append('id', this.props.userId);
 		user.append('first_name', this.state.first_name);
 		user.append('last_name', this.state.last_name);
 		user.append('email', this.state.email);
@@ -189,7 +196,8 @@ class EditUser extends React.Component {
 		user.append('file', this.state.file);
 		
 		this.setState({ loading: true });
-		axios.post("http://localhost:44912/api/user/edit", user, { withCredentials: true })
+		//"http://localhost:44912/api/user/edit", user, { withCredentials: true }
+		axios({ url: "http://localhost:44912/api/user/edit", method: "PUT", data: user, withCredentials: true })
 			.then(res => {
 				console.log(res);
 				this.setState({ loading: false });
@@ -224,7 +232,11 @@ class EditUser extends React.Component {
 						</ModalBody>
 						<ModalFooter>
 							<ButtonClose id="closeModal" data-action="editProfile" onClick={this.props.updateState}>Close</ButtonClose>
-							<ButtonSave onClick={this.editProfile}>Save</ButtonSave>
+							{this.state.email === "" ? 
+								<ButtonSave onClick={this.editProfile} disabled>Save</ButtonSave> 
+							: 
+								<ButtonSave onClick={this.editProfile}>Save</ButtonSave>
+							}
 						</ModalFooter>
 					</form>
 				</Modal>
