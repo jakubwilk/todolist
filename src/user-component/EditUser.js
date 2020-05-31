@@ -200,7 +200,6 @@ class EditUser extends React.Component {
 		this.setState({ loading: true });
 		axios({ url: "http://localhost:44912/api/user/edit", method: "PUT", data: user, withCredentials: true })
 			.then(res => {
-				console.log(res);
 				this.setState({ response: res.data, loading: false });
 			})
 			.catch(err => {
