@@ -3,6 +3,7 @@ import axios from "axios";
 import styled from "styled-components";
 import ClockLoader from "react-spinners/ClockLoader";
 import EditUserForm from "./EditUserForm";
+import ValidationMessage from "./../utils/ValidationMessage";
 
 const Overlay = styled.div`
 	position: fixed;
@@ -142,6 +143,7 @@ class EditUser extends React.Component {
 			avatar: "",
 			file: [],
 			description: "",
+			response: [],
 			loading: false
 		};
 
@@ -196,12 +198,14 @@ class EditUser extends React.Component {
 		user.append('file', this.state.file);
 		
 		this.setState({ loading: true });
-		//"http://localhost:44912/api/user/edit", user, { withCredentials: true }
 		axios({ url: "http://localhost:44912/api/user/edit", method: "PUT", data: user, withCredentials: true })
 			.then(res => {
 				console.log(res);
-				this.setState({ loading: false });
+				this.setState({ response: res.data, loading: false });
 			})
+			.catch(err => {
+				this.setState({ response: err, loading: false });
+			});
 	}
 
 	render() {
@@ -218,21 +222,24 @@ class EditUser extends React.Component {
 									<ClockLoader loading={this.props.loading} color={"#706fd3"} size={80} />
 								</SpinnerLayer>
 								:
-								<EditUserForm 
-									first_name={this.state.first_name} 
-									last_name={this.state.last_name} 
-									email={this.state.email} 
-									avatar={this.state.avatar} 
-									file={this.state.file}
-									description={this.state.description} 
-									updateData={this.updateData}
-									updateFile={this.updateFile}
-								/>
+								<>
+									{this.state.response.status !== undefined && !this.state.loading ? <ValidationMessage type={this.state.response.type} message={this.state.response.message} /> : null}
+									<EditUserForm 
+										first_name={this.state.first_name} 
+										last_name={this.state.last_name} 
+										email={this.state.email} 
+										avatar={this.state.avatar} 
+										file={this.state.file}
+										description={this.state.description} 
+										updateData={this.updateData}
+										updateFile={this.updateFile}
+									/>
+								</>
 							}
 						</ModalBody>
 						<ModalFooter>
 							<ButtonClose id="closeModal" data-action="editProfile" onClick={this.props.updateState}>Close</ButtonClose>
-							{this.state.email === "" ? 
+							{this.state.email === "" || this.state.loading ? 
 								<ButtonSave onClick={this.editProfile} disabled>Save</ButtonSave> 
 							: 
 								<ButtonSave onClick={this.editProfile}>Save</ButtonSave>

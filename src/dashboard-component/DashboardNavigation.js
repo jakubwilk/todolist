@@ -28,14 +28,6 @@ const WelcomeHeader = styled.p`
     color: #f4f4f4;
 `;
 
-const UserAvatar = styled.img`
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    margin-left: 10px;
-    margin-right: 5px;
-`;
-
 const Menu = styled.ul`
     display: flex;
     list-style: none;
@@ -109,7 +101,6 @@ const MenuButton = styled.button`
 class DashboardNavigation extends React.Component {
     state = {
         username: null,
-        avatar: null,
         loading: false
     };
 
@@ -117,10 +108,10 @@ class DashboardNavigation extends React.Component {
         this.setState({ loading: true });
         axios.get("http://localhost:44912/api/user/user/" + this.props.userId, { withCredentials: true })
             .then(res => {
-                this.setState({ username: res.data.message.username, avatar: res.data.message.avatar, loading: false });
+                this.setState({ username: res.data.message.username, loading: false });
             })
             .catch(err => {
-                this.setState({ username: null, avatar: null, loading: false });
+                this.setState({ username: null, loading: false });
             });
     }
 
@@ -129,11 +120,8 @@ class DashboardNavigation extends React.Component {
             <NavHeader>
                 <NavContainer>
                     <Navbar>
-                        <WelcomeHeader>Welcome, {!this.state.loading ? 
-                            <>
-                                <UserAvatar src={this.state.avatar} alt={this.state.username} /> 
-                                <strong>{this.state.username}</strong>
-                            </> 
+                        <WelcomeHeader>Welcome,{!this.state.loading ? 
+                            <strong>&nbsp;{this.state.username}</strong> 
                             : 
                             null 
                         }</WelcomeHeader>

@@ -40,7 +40,7 @@ module.exports = {
 	async postEditUser(req, res) {
 		const { email, description, first_name, last_name } = req.body;
 		const path = 'uploads/';
-		const filename = req.files === undefined ? 'avatardefault.png' : Date.now() + '-' + req.files.file.name;
+		const filename = req.files === null ? null : Date.now() + '-' + req.files.file.name;
 		const errors = validationResult(req);
 		const errorsMessage = [];
 
@@ -77,8 +77,7 @@ module.exports = {
 
 			file.mv(path + filename, (err) => {
 				if (err) {
-					console.log(err);
-					//return res.send({ status: 500, type: 'error', message: ['1. There was a problem. Please try it later'] });
+					return res.send({ status: 500, type: 'error', message: ['1. There was a problem. Please try it later'] });
 				}
 			});
 		}
@@ -96,7 +95,9 @@ module.exports = {
 		user.last_name = data.last_name;
 		user.email = data.email;
 		user.description = data.description;
-		user.avatar = data.avatar;
+		if (filename !== null) {
+			user.avatar = data.avatar;
+		}
 
 		const query = user.save();
 
