@@ -7,6 +7,7 @@ const fileUpload = require('express-fileupload');
 
 const auth = require('./controllers/auth.controller');
 const user = require('./controllers/user.controller');
+const list = require('./controllers/list.controller');
 
 require('dotenv').config();
 
@@ -33,6 +34,7 @@ const bootstrap = () => {
 	app.use('/uploads', express.static(__dirname + '/uploads'));
 	app.use('/api/auth', auth.user());
 	app.use('/api/user', user.user());
+	app.use('/api/userlist', list.list());
 
 	app.listen(port, () => {
 		console.log(`[SERVER]: Server is runing on port: ${port}`);
