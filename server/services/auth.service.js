@@ -5,8 +5,8 @@ const User = require('../models/user.model');
 
 const userValidationRules = () => {
 	return [
-    	body('email', 'Incorrect email address\n').not().isEmail().escape().trim(),
-    	body('password', 'Password contains not allowed characters\n').not().escape().trim(),
+    	body('email', 'Incorrect email address').not().isEmail().escape().trim(),
+    	body('password', 'Password contains not allowed characters').not().escape().trim(),
   	]
 }
 
