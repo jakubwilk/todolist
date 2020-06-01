@@ -51,8 +51,8 @@ module.exports = {
 			return res.send({ status: 200, type: 'error', message: ['Field title is too long (max. 60 characters)'] });
         }
         
-        if (description.length > 300) {
-			return res.send({ status: 200, type: 'error', message: ['Field description is too long (max. 300 characters)'] });
+        if (description.length > 150) {
+			return res.send({ status: 200, type: 'error', message: ['Field description is too long (max. 150 characters)'] });
 		}
 
         const user = await User.findById({ _id: author });
@@ -86,12 +86,16 @@ module.exports = {
     async editUserList(req, res) {
         const lid = req.params;
 
-        const list = List.findById({ _id: lid.id });
+        const list = await List.findById({ _id: lid.id });
 
-        if (!list) {
-            return res.send({ status: 200, type: 'error', message: ['This list does not exists'] });
+        if (list) {
+            return res.send({ status: 200, type: 'success', message: { title: list.title, description: list.description, author: list.author, finished: list.finished } });  
         }
 
-        return res.send({ status: 200, type: 'success', message: list });
+        return res.send({ status: 200, type: 'error', message: ['This list does not exists'] });
+    },
+
+    async saveEditUserList(req, res) {
+        
     }
 }

@@ -145,18 +145,20 @@ class EditList extends React.Component {
 
     updateData = (e) => {
 		this.setState({ [e.target.name]: e.target.value });
-	}
-
+    }
+    
     componentDidMount = () => {
-        // this.setState({ loading: true });
-		// axios.get("http://localhost:44912/api/userlist/edit/" + this.props.listId, { withCredentials: true })
-		// 	.then(res => {
-		// 		const user = res.data.user;
-		// 		// this.setState({ first_name: user.first_name, last_name: user.first_name, email: user.email, avatar: user.avatar, description: user.description, loading: false });
-		// 	})
-		// 	.catch(err => {
-		// 		this.setState({ loading: false });
-        //     });
+        if (this.props.listId !== 0) {
+            this.setState({ loading: true });
+            axios.get("http://localhost:44912/api/userlist/edit/" + this.props.listId, { withCredentials: true })
+                .then(res => {
+                    const list = res.data.message;
+                    this.setState({ title: list.title, description: list.description, author: list.author, finished: list.finished, loading: false });
+                })
+                .catch(err => {
+                    this.setState({ loading: false });
+                });
+        }
     }
 
     editList = (e) => {
@@ -204,6 +206,7 @@ class EditList extends React.Component {
                                         title={this.state.title} 
                                         description={this.state.description} 
                                         updateData={this.updateData} 
+                                        listId={this.props.listId}
                                     />
                                 </>
                             }

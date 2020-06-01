@@ -106,7 +106,6 @@ class List extends React.Component {
 
         axios.get("http://localhost:44912/api/userlist/lists/" + this.props.userId, { withCredentials: true })
             .then(res => {
-                console.log(res);
                 if (res.data.type === "success") {
                     this.setState({ message: "", lists: res.data.message, loading: false });
                 } else {
@@ -140,7 +139,14 @@ class List extends React.Component {
                             : 
                                 <ListGrid>
                                     {this.state.lists.map(list => 
-                                        <ListItem key={list._id} data-id={list._id} title={list.title} description={list.description} />
+                                        <ListItem 
+                                            key={list._id} 
+                                            id={list._id} 
+                                            title={list.title} 
+                                            description={list.description} 
+                                            finished={list.finished} 
+                                            handleClick={this.props.updateState} 
+                                        />
                                     )}
                                 </ListGrid>
                             }

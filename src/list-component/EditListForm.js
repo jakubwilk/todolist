@@ -9,30 +9,32 @@ const FormGrid = styled.div`
     grid-template-rows: repeat(2, auto);
 `;
 
-const EditListForm = ({ title, description, updateData }) => {
-    return (
-        <FormGrid>
-            <InputForm 
-                labelFor="title" 
-                labelName="Title" 
-                type="text" 
-                name="title" 
-                id="title" 
-                groupClass="editlist editlist-title"
-                value={title} 
-                handleChange={updateData} 
-                placeholder="List title" />
-            <FormTextarea 
-                labelFor="description" 
-                labelName="Description" 
-                name="description" 
-                id="description" 
-                groupClass="editlist editlist-description"
-                value={description} 
-                handleChange={updateData} 
-                placeholder="Write something about this list yourself" />
-        </FormGrid>
-    );
+class EditListForm extends React.Component {
+    render() {
+        return (
+            <FormGrid>
+                <InputForm 
+                    labelFor="title" 
+                    labelName="Title" 
+                    type="text" 
+                    name="title" 
+                    id="title" 
+                    groupClass="editlist editlist-title"
+                    value={this.props.title} 
+                    handleChange={this.props.updateData} 
+                    placeholder="List title" />
+                <FormTextarea 
+                    labelFor="description" 
+                    labelName="Description" 
+                    name="description" 
+                    id="description" 
+                    groupClass="editlist editlist-description"
+                    value={this.props.description} 
+                    handleChange={this.props.updateData} 
+                    placeholder="Write something about this list yourself" />
+            </FormGrid>
+        );
+    }
 }
 
 export default EditListForm;

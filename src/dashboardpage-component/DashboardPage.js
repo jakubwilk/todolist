@@ -10,6 +10,7 @@ class DashboardPage extends React.Component {
     state = {
         editProfile: false,
         editList: false,
+        editListId: 0,
         editTask: false,
         logout: false,
         loading: false
@@ -20,6 +21,11 @@ class DashboardPage extends React.Component {
     }
 
     updateState = (e) => {
+        const editListId = e.target.getAttribute('data-id');
+        if (editListId !== null) {
+            this.setState({ editListId: editListId });
+        }
+
         const attrName = e.target.getAttribute('data-action');
         this.setState({ [attrName]: !this.state[attrName] });
     }
@@ -44,7 +50,7 @@ class DashboardPage extends React.Component {
             <>
                 <DashboardNavigation userId={this.props.userId} updateState={this.updateState} logoutAction={this.logoutUser} />
                 {this.state.editProfile ? <EditUser userId={this.props.userId} updateState={this.updateState} focus={this.state.editProfile} /> : null}
-                {this.state.editList ? <EditList userId={this.props.userId} updateState={this.updateState} /> : null}
+                {this.state.editList ? <EditList userId={this.props.userId} updateState={this.updateState} listId={this.state.editListId} /> : null}
                 <List userId={this.props.userId} updateState={this.updateState} />
             </>
         );
