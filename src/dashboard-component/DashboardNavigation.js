@@ -37,12 +37,12 @@ const Menu = styled.ul`
     left: 0;
     top: 72px;
     padding: 1rem 1.5rem;
+    margin-top: 0;
+    margin-bottom: 0;
     justify-content: flex-end;
 
     @media screen and (min-width: 768px) {
         align-items: center;
-        margin-top: 0;
-        margin-bottom: 0;
         position: relative;
         left: auto;
         top: auto;

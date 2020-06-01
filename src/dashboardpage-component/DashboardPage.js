@@ -3,12 +3,14 @@ import axios from "axios";
 import { Redirect } from "react-router-dom";
 import DashboardNavigation from "./../dashboard-component/DashboardNavigation";
 import EditUser from "./../user-component/EditUser";
+import List from "./../list-component/List";
+import EditList from "./../list-component/EditList";
 
 class DashboardPage extends React.Component {
     state = {
         editProfile: false,
-        createList: false,
-        createTask: false,
+        editList: false,
+        editTask: false,
         logout: false,
         loading: false
     };
@@ -41,8 +43,9 @@ class DashboardPage extends React.Component {
         return (
             <>
                 <DashboardNavigation userId={this.props.userId} updateState={this.updateState} logoutAction={this.logoutUser} />
-                <h1>Dashboard</h1>
                 {this.state.editProfile ? <EditUser userId={this.props.userId} updateState={this.updateState} focus={this.state.editProfile} /> : null}
+                {this.state.editProfile ? <EditList userId={this.props.userId} updateState={this.updateState} focus={this.state.editList} /> : null}
+                <List userId={this.props.userId} updateState={this.updateState} focus={this.state.editList} />
             </>
         );
     }

@@ -1,5 +1,5 @@
 const Router = require('express');
-const { getUserLists, createUserList } = require('../services/list.service');
+const { getUserLists, createUserList, editUserList } = require('../services/list.service');
 
 module.exports = {
     list() {
@@ -7,6 +7,7 @@ module.exports = {
 
         api.get('/lists/:id', getUserLists);
         api.post('/create', createUserList);
+        api.get('/edit/:id', editUserList);
 
         return api;
     }

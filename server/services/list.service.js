@@ -15,16 +15,16 @@ module.exports = {
     async getUserLists(req, res) {
         const uid = req.params;
 
-        const user = User.findById({ id: uid });
+        const user = User.findById({ id: uid.id });
 
         if (!user) {
             res.send({ status: 400, type: 'error', message: ['User not found'] });
         }
 
-        const lists = await List.find({ uid: uid });
+        const lists = await List.find({ uid: uid.id });
 
-        if (!lists) {
-            return res.send({ status: 200, type: 'error', message: ['You do not have any lists yet. Create the first one'] });
+        if (lists.length === 0 || !lists) {
+            return res.send({ status: 200, type: 'error', message: ['You do not have any lists yet. Create the first one!'] });
         }
 
         return res.send({ status: 200, type: 'success', message: lists });
@@ -65,5 +65,17 @@ module.exports = {
             .catch(err => {
                 return res.send({ status: 500, type: 'error', message: ['Error while processing your query'] });
             });
+    },
+
+    async editUserList(req, res) {
+        const lid = req.params;
+
+        const list = List.findById({ _id: lid.id });
+
+        if (!list) {
+            return res.send({ status: 200, type: 'error', message: ['This list does not exists'] });
+        }
+
+        return res.send({ status: 200, type: 'success', message: list });
     }
 }
