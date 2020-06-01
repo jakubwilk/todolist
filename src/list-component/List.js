@@ -2,6 +2,7 @@ import React from "react";
 import axios from "axios";
 import styled from "styled-components";
 import ClockLoader from "react-spinners/ClockLoader";
+import ListItem from "./ListItem";
 
 const Wrapper = styled.div`
     margin-left: 2rem;
@@ -47,7 +48,7 @@ const NoListMessage = styled.h2`
     margin-bottom: 0;
 `;
 
-const MenuButton = styled.button`
+const CreateButton = styled.button`
     cursor: pointer;
     border: 0;
     border-radius: 5px;
@@ -60,8 +61,24 @@ const MenuButton = styled.button`
     &:hover,
     &:focus {
         outline: none;
-        background-color: #fff;
-        color: #2b2b2b;
+        background-color: #5958a9;
+    }
+`;
+
+const ListGrid = styled.div`
+    display: grid;
+    grid-template-columns: 100%;
+    grid-template-rows: repeat(6, 1fr);
+    grid-gap: 1.5rem;
+
+    @media screen and (min-width: 768px) {
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(3, 1fr);
+    }
+
+    @media screen and (min-width: 960px) {
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: repeat(2, 1fr);
     }
 `;
 
@@ -73,7 +90,15 @@ class List extends React.Component {
             lists: [],
             message: "",
             loading: false
-        }
+        };
+
+        this.closeModalByESC = this.closeModalByESC.bind(this);
+    }
+
+    closeModalByESC = (event) => {
+		if (event.keyCode === 27) {
+			document.querySelector("#closeModal").click();
+		}
     }
 
     componentDidMount = () => {
@@ -81,28 +106,43 @@ class List extends React.Component {
 
         axios.get("http://localhost:44912/api/userlist/lists/" + this.props.userId, { withCredentials: true })
             .then(res => {
-                this.setState({ message: res.data.message[0], loading: false });
+                console.log(res);
+                if (res.data.type === "success") {
+                    this.setState({ message: "", lists: res.data.message, loading: false });
+                } else {
+                    this.setState({ message: res.data.message[0], loading: false });
+                }
             })
             .catch(err => {
-                this.setState({ message: err.data.message[0], loading: false });
+                this.setState({ message: "", loading: false });
             });
+
+        document.addEventListener("keyup", this.closeModalByESC, false);
+    }
+
+    componentWillUnmount = () => {
+		document.removeEventListener("keyup", this.closeModalByESC, false);
     }
 
     render() {
         return (
             <Wrapper>
                 <ListContent>
-                    <MenuButton data-action="editList">Create list</MenuButton>
+                    <CreateButton data-action="editList" onClick={this.props.updateState}>Create list</CreateButton>
                     {this.state.loading ? 
                     <SpinnerLayer>
                         <ClockLoader loading={this.props.loading} color={"#706fd3"} size={80} />
                     </SpinnerLayer>
                     :
                         <>
-                            {this.state.lists.length === 0 ? 
+                            {this.state.message !== "" ? 
                                 <NoListMessage>{this.state.message}</NoListMessage>
                             : 
-                                <>Lists</>
+                                <ListGrid>
+                                    {this.state.lists.map(list => 
+                                        <ListItem key={list._id} data-id={list._id} title={list.title} description={list.description} />
+                                    )}
+                                </ListGrid>
                             }
                         </>
                     }

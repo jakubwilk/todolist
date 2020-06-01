@@ -89,6 +89,12 @@ const AppStyle = createGlobalStyle`
             }
         }
     }
+
+    .editlist {
+        & > input, textarea {
+            max-width: 100%;
+        }
+    }
 `;
 
 const App = () => {

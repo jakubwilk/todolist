@@ -146,7 +146,7 @@ class EditUser extends React.Component {
 			response: [],
 			loading: false
 		};
-
+		
 		this.closeModalByESC = this.closeModalByESC.bind(this);
 	}
 
@@ -214,7 +214,7 @@ class EditUser extends React.Component {
 					<ModalHeader>
 						<ModalHeading><span>Edit</span> profile</ModalHeading>
 					</ModalHeader>
-					<form>
+					<form onSubmit={this.editProfile}>
 						<ModalBody>
 							{this.state.loading ?
 								<SpinnerLayer>
@@ -237,11 +237,11 @@ class EditUser extends React.Component {
 							}
 						</ModalBody>
 						<ModalFooter>
-							<ButtonClose id="closeModal" data-action="editProfile" onClick={this.props.updateState}>Close</ButtonClose>
+							<ButtonClose type="button" id="closeModal" data-action="editProfile" onClick={this.props.updateState}>Close</ButtonClose>
 							{this.state.email === "" || this.state.loading ? 
-								<ButtonSave onClick={this.editProfile} disabled>Save</ButtonSave> 
+								<ButtonSave type="button" onClick={this.editProfile} disabled>Save</ButtonSave> 
 							: 
-								<ButtonSave onClick={this.editProfile}>Save</ButtonSave>
+								<ButtonSave type="button" onClick={this.editProfile}>Save</ButtonSave>
 							}
 						</ModalFooter>
 					</form>

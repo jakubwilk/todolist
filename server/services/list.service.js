@@ -31,9 +31,9 @@ module.exports = {
     },
 
     async createUserList(req, res) {
-        const { title, description, author } = req.body;
+        const { title, description, author } = req.body.list;
         const errors = validationResult(req);
-		const errorsMessage = [];
+        const errorsMessage = [];
 
     	if (!errors.isEmpty()) {
      		errors.array().map(error => errorsMessage.push(error.msg));
@@ -41,6 +41,10 @@ module.exports = {
 
     	if (errorsMessage.length !== 0) {
       		return res.send({ status: 200, type: 'error', message: errorsMessage });
+        }
+
+        if (title.length === 0) {
+            return res.send({ status: 200, type: 'error', message: ['Field title is required'] });
         }
         
         if (title.length > 60) {
@@ -51,10 +55,22 @@ module.exports = {
 			return res.send({ status: 200, type: 'error', message: ['Field description is too long (max. 300 characters)'] });
 		}
 
-        const user = User.findById({ id: author });
+        const user = await User.findById({ _id: author });
 
         if (!user) {
             res.send({ status: 400, type: 'error', message: ['User not found'] });
+        }
+
+        const findList = await List.findOne({ title: title, uid: author});
+
+        if (findList) {
+            return res.send({ status: 200, type: 'error', message: ['List with this title already exist in your dashboard'] });
+        }
+
+        const lists = await List.find({ uid: author });
+
+        if (lists.length > 6) {
+            return res.send({ status: 200, type: 'error', message: ['You have too many lists.'] });
         }
 
         const list = new List({ title: title, description: description, uid: author, finished: false });

@@ -44,8 +44,8 @@ class DashboardPage extends React.Component {
             <>
                 <DashboardNavigation userId={this.props.userId} updateState={this.updateState} logoutAction={this.logoutUser} />
                 {this.state.editProfile ? <EditUser userId={this.props.userId} updateState={this.updateState} focus={this.state.editProfile} /> : null}
-                {this.state.editProfile ? <EditList userId={this.props.userId} updateState={this.updateState} focus={this.state.editList} /> : null}
-                <List userId={this.props.userId} updateState={this.updateState} focus={this.state.editList} />
+                {this.state.editList ? <EditList userId={this.props.userId} updateState={this.updateState} /> : null}
+                <List userId={this.props.userId} updateState={this.updateState} />
             </>
         );
     }
