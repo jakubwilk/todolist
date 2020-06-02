@@ -31,7 +31,7 @@ class EditListForm extends React.Component {
                     groupClass="editlist editlist-description"
                     value={this.props.description} 
                     handleChange={this.props.updateData} 
-                    placeholder="Write something about this list yourself" />
+                    placeholder="Write something about this list" />
             </FormGrid>
         );
     }

@@ -24,6 +24,8 @@ const ItemContent = styled.div`
     position: relative;
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
 `;
 
 const ItemMenu = styled.ul`
@@ -88,16 +90,16 @@ class ListItem extends React.Component {
             <Item>
                 <ItemContent>
                     {this.props.finished ? <Badge>Finished</Badge> : null}
-                    <>
+                    <div>
                         <ItemTitle>{this.props.title}</ItemTitle>
                         <ItemDescription>{this.props.description}</ItemDescription>
-                    </>
+                    </div>
                     <ItemMenu>
                         <li>
                             <ButtonMenu data-action="editList" data-id={this.props.id} onClick={this.props.handleClick}>Edit</ButtonMenu>
                         </li>
                         <li>
-                            <ButtonMenu>Delete</ButtonMenu>
+                            <ButtonMenu data-id={this.props.id} onClick={this.props.handleDelete}>Delete</ButtonMenu>
                         </li>
                     </ItemMenu>
                 </ItemContent>

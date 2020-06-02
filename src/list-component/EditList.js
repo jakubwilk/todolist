@@ -148,6 +148,7 @@ class EditList extends React.Component {
     }
     
     componentDidMount = () => {
+        console.log(this.props.listId);
         if (this.props.listId !== 0) {
             this.setState({ loading: true });
             axios.get("http://localhost:44912/api/userlist/edit/" + this.props.listId, { withCredentials: true })
@@ -168,7 +169,7 @@ class EditList extends React.Component {
             title: this.state.title,
             description: this.state.description,
             author: this.props.userId,
-            resposne: [],
+            id: this.props.listId,
             finished: this.state.finished
         }
 
@@ -179,6 +180,7 @@ class EditList extends React.Component {
                     window.location.reload(false);
                 } else {
                     this.setState({ response: res.data, loading: false });
+                    console.log(this.state.response);
                 }
             })
             .catch(err => {
@@ -201,7 +203,11 @@ class EditList extends React.Component {
                                 </SpinnerLayer>
                                 :
                                 <>
-                                    {this.state.response.status !== "success" && this.state.response.status !== undefined && !this.state.loading ? <ValidationMessage type={this.state.response.type} message={this.state.response.message} /> : null}
+                                    {this.state.response.status !== "success" && this.state.response.status !== undefined && !this.state.loading ? 
+                                        <ValidationMessage type={this.state.response.type} message={this.state.response.message} /> 
+                                    : 
+                                        null
+                                    }
                                     <EditListForm 
                                         title={this.state.title} 
                                         description={this.state.description} 

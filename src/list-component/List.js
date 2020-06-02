@@ -146,6 +146,7 @@ class List extends React.Component {
                                             description={list.description} 
                                             finished={list.finished} 
                                             handleClick={this.props.updateState} 
+                                            handleDelete={this.props.deleteList}
                                         />
                                     )}
                                 </ListGrid>

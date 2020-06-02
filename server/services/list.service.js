@@ -31,7 +31,7 @@ module.exports = {
     },
 
     async createUserList(req, res) {
-        const { title, description, author } = req.body.list;
+        const { title, description, author, finished, id } = req.body.list;
         const errors = validationResult(req);
         const errorsMessage = [];
 
@@ -63,7 +63,7 @@ module.exports = {
 
         const findList = await List.findOne({ title: title, uid: author});
 
-        if (findList) {
+        if (findList && id === 0) {
             return res.send({ status: 200, type: 'error', message: ['List with this title already exist in your dashboard'] });
         }
 
@@ -73,14 +73,37 @@ module.exports = {
             return res.send({ status: 200, type: 'error', message: ['You have too many lists.'] });
         }
 
-        const list = new List({ title: title, description: description, uid: author, finished: false });
-        list.save()
-            .then(list => {
-                return res.send({ status: 200, type: 'success', message: ['List successfully created'] });
-            })
-            .catch(err => {
-                return res.send({ status: 500, type: 'error', message: ['Error while processing your query'] });
-            });
+        if (id === 0) {
+            const list = new List({ title: title, description: description, uid: author, finished: false });
+            list.save()
+                .then(list => {
+                    return res.send({ status: 200, type: 'success', message: ['List successfully created'] });
+                })
+                .catch(err => {
+                    return res.send({ status: 500, type: 'error', message: ['Error while processing your query'] });
+                });
+        } else {
+            const data = {
+                title: title,
+                description: title,
+                author: title,
+                finished: finished
+            }
+
+            const list = await List.findById({ _id: id });
+            list.title = data.title;
+            list.description = data.description;
+            list.author = data.author;
+            list.finished = data.finished;
+
+            const query = list.save();
+            if (!query) {
+                return res.send({ status: 500, type: 'error', message: ['There was a problem. Please try it later'] });
+            }
+    
+            return res.send({ status: 200, type: 'success', message: ['List updated'] });
+        }
+
     },
 
     async editUserList(req, res) {
@@ -95,7 +118,15 @@ module.exports = {
         return res.send({ status: 200, type: 'error', message: ['This list does not exists'] });
     },
 
-    async saveEditUserList(req, res) {
-        
+    async deleteUserList(req, res) {
+        const lid = req.params;
+
+        const list = await List.deleteOne({ _id: lid.id });
+
+        if (!list) {
+            return res.send({ status: 500, type: 'error',  message: ['There was a problem. Please try it later']});
+        }
+
+        return res.send({ status: 200, type: 'success', message: ['List successfully deleted with all related tasks'] });
     }
 }

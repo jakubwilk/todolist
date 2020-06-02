@@ -77,7 +77,7 @@ module.exports = {
 
 			file.mv(path + filename, (err) => {
 				if (err) {
-					return res.send({ status: 500, type: 'error', message: ['1. There was a problem. Please try it later'] });
+					return res.send({ status: 500, type: 'error', message: ['There was a problem. Please try it later'] });
 				}
 			});
 		}
@@ -102,7 +102,7 @@ module.exports = {
 		const query = user.save();
 
 		if (!query) {
-			return res.send({ status: 500, type: 'error', message: ['2. There was a problem. Please try it later'] });
+			return res.send({ status: 500, type: 'error', message: ['There was a problem. Please try it later'] });
 		}
 
 		return res.send({ status: 200, type: 'success', message: ['Profile updated'] });
