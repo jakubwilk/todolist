@@ -28,6 +28,11 @@ const ItemContent = styled.div`
     height: 100%;
 `;
 
+const FooterGrid = styled.div`
+    display: flex;
+    justify-content: space-between;
+`;
+
 const ItemMenu = styled.ul`
     margin-bottom: 0;
     padding-left: 0;
@@ -94,14 +99,21 @@ class ListItem extends React.Component {
                         <ItemTitle>{this.props.title}</ItemTitle>
                         <ItemDescription>{this.props.description}</ItemDescription>
                     </div>
-                    <ItemMenu>
-                        <li>
-                            <ButtonMenu data-action="editList" data-id={this.props.id} onClick={this.props.handleClick}>Edit</ButtonMenu>
-                        </li>
-                        <li>
-                            <ButtonMenu data-id={this.props.id} onClick={this.props.handleDelete}>Delete</ButtonMenu>
-                        </li>
-                    </ItemMenu>
+                    <FooterGrid>
+                        <ItemMenu>
+                            <li>
+                                <ButtonMenu data-action="editTask" data-id={this.props.id}>View</ButtonMenu>
+                            </li>
+                        </ItemMenu>
+                        <ItemMenu>
+                            <li>
+                                <ButtonMenu data-action="editList" data-id={this.props.id} onClick={this.props.handleClick}>Edit</ButtonMenu>
+                            </li>
+                            <li>
+                                <ButtonMenu data-id={this.props.id} onClick={this.props.handleDelete}>Delete</ButtonMenu>
+                            </li>
+                        </ItemMenu>
+                    </FooterGrid>
                 </ItemContent>
             </Item>
         );
