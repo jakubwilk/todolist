@@ -102,7 +102,7 @@ class ListItem extends React.Component {
                     <FooterGrid>
                         <ItemMenu>
                             <li>
-                                <ButtonMenu data-action="editTask" data-id={this.props.id}>View</ButtonMenu>
+                                <ButtonMenu data-action="editTask" data-id={this.props.id} onClick={this.props.handleClick}>View</ButtonMenu>
                             </li>
                         </ItemMenu>
                         <ItemMenu>

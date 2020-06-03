@@ -6,6 +6,7 @@ import DashboardNavigation from "./../dashboard-component/DashboardNavigation";
 import EditUser from "./../user-component/EditUser";
 import List from "./../list-component/List";
 import EditList from "./../list-component/EditList";
+import Task from "./../task-component/Task";
 import ValidationMessage from "../utils/ValidationMessage";
 
 const ValidationBox = styled.div`
@@ -35,6 +36,8 @@ class DashboardPage extends React.Component {
         const editListId = e.target.getAttribute('data-id');
         if (editListId !== null) {
             this.setState({ editListId: editListId });
+        } else {
+            this.setState({ editListId: 0 });
         }
 
         const attrName = e.target.getAttribute('data-action');
@@ -77,7 +80,8 @@ class DashboardPage extends React.Component {
             <>
                 <DashboardNavigation userId={this.props.userId} updateState={this.updateState} logoutAction={this.logoutUser} />
                 {this.state.editProfile ? <EditUser userId={this.props.userId} updateState={this.updateState} focus={this.state.editProfile} /> : null}
-                {this.state.editList ? <EditList userId={this.props.userId} updateState={this.updateState} listId={this.state.editListId} /> : null}
+                {this.state.editList ? <EditList userId={this.props.userId} updateState={this.updateState} listId={this.state.editListId} /> : null }
+                {this.state.editTask ? <Task userId={this.props.userId} updateState={this.updateState} listId={this.state.editListId} /> : null}
                 <List userId={this.props.userId} updateState={this.updateState} deleteList={this.deleteUserList} />
                 {!this.state.loading && this.state.response.length === 0 ? 
                     null

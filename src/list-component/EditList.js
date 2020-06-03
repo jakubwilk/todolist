@@ -148,7 +148,6 @@ class EditList extends React.Component {
     }
     
     componentDidMount = () => {
-        console.log(this.props.listId);
         if (this.props.listId !== 0) {
             this.setState({ loading: true });
             axios.get("http://localhost:44912/api/userlist/edit/" + this.props.listId, { withCredentials: true })
