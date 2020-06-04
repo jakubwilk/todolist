@@ -1,109 +1,110 @@
-const jwt = require('jsonwebtoken');
-const bcrypt = require('bcrypt');
 const { body, validationResult } = require('express-validator')
 const User = require('../models/user.model');
 
-async function findUser(email) { 
-  const user = await User.findOne({ email: email });
-
-  return user;
-}
-
 const userValidationRules = () => {
-  return [
-    body('email', 'Incorrect email address\n').not().isEmail().escape().trim(),
-    body('password', 'Password contains not allowed characters\n').not().escape().trim(),
-  ]
+	return [
+		body('email', 'Incorrect email address').isEmail().escape().trim(),
+		body('description', 'Description field contains invalid characters').isString().escape().trim(),
+		body('first_name', 'First name field contains invalid characters').isString().escape().trim(),
+		body('last_name', 'Last name field contains invalid characters').isString().escape().trim()
+  	]
 }
 
 module.exports = {
-  userValidationRules,
+	userValidationRules,
 
-  async loginUser(req, res, next) {
-    const { email, password } = req.body.user;
-
-    const errors = validationResult(req);
-    const errorsMessage = [];
-
-    if (!errors.isEmpty()) {
-      errors.array().map(error => errorsMessage.push(error.msg));
-    }
-
-    if (errorsMessage.length !== 0) {
-      return res.send({ status: 200, type: 'error', message: errorsMessage });
-    }
-
-    const user = await findUser(email);
-
-    if (!user) {
-      return res.send({ status: 200, type: 'error', message: ['Account with this email address not exists'] });
-    }
-
-    const token = jwt.sign({ id: user._id }, process.env['JWT_HASH'], { expiresIn: 86400 });
-
-    bcrypt.compare(password, user.password, (err, result) => {
-      if (err) {
-        return res.send({ status: 500, type: 'error', message: ['Error while processing your query'] });
-      }
-
-      if (!result) {
-        return res.send({ status: 200, type: 'error', message: ['Wrong password'] });
-      } 
-
-      res.cookie('auth_token', token, { maxAge: 1000 * 60 * 1440, httpOnly: true });
-      return res.send({ status: 200, type: 'success', message: ['User successfully logged'] });
-    });
-  },
-
-  async registerUser(req, res, next) {
-    const { email, password } = req.body.user;
-
-    const user = await findUser(email);
-
-    const errors = validationResult(req);
-    const errorsMessage = [];
-
-    if (!errors.isEmpty()) {
-      errors.array().map(error => errorsMessage.push(error.msg));
-    }
-
-    if (errorsMessage.length !== 0) {
-      return res.send({ status: 200, type: 'error', message: errorsMessage });
-    }
-
-    if (user) {
-      return res.send({ status: 200, type: 'error', message: ['Email is already in use'] });
-    }
+  	async getUserData(req, res) {
+    	const uid = req.params;
     
-    const member = new User({ email: email, password: password });
+    	const user = await User.findById({ _id: uid.id });
+    
+    	if (user) {
+      		return res.send({ status: 200, type: 'success', message: { username: user.email, avatar: user.avatar } });
+    	}
 
-    bcrypt.hash(member.password, parseInt(process.env['HASH_ROUNDS']), (err, hash) => {
-      if (err) {
-        return res.send({ status: 500, type: 'error', message: ['Error while processing your query'] });
-      }
+    	return res.send({ status: 200, type: 'error', message: { username: 'No username' } });
+  	},
 
-      member.password = hash;
-      member.save()
-        .then(user => {
-          return res.send({ status: 201, type: 'success', message: ['User created successfully. Now you can go to the login page'] });
-        })
-        .catch(err => {
-          return res.send({ status: 500, type: 'error', message: ['Error while processing your query'] });
-        }); 
-    });
-  },
+	async getEditUser(req, res) {
+		const uid = req.params;
 
-  async checkToken(req, res) {
-    const token = req.cookies;
+		const user = await User.findById({ _id: uid.id });
 
-    const auth = await jwt.verify(token.auth_token, process.env['JWT_HASH'], (err, decoded) => {
-      if (err) {
-        return res.send({ status: 401, type: 'error', message: 'Invalid JWT' });
-      }
+		if (user) {
+			return res.send({ status: 200, type: 'success', user });
+		} else {
+			return res.send({ status: 401, type: 'error', message: ['No user'] });
+		}
+	},
 
-      return res.send({ status: 200, typr: 'success', message: decoded.id });
-    });
+	async postEditUser(req, res) {
+		const { email, description, first_name, last_name } = req.body;
+		const path = 'uploads/';
+		const filename = req.files === null ? null : Date.now() + '-' + req.files.file.name;
+		const errors = validationResult(req);
+		const errorsMessage = [];
 
-    return auth;
-  },
+    	if (!errors.isEmpty()) {
+     		errors.array().map(error => errorsMessage.push(error.msg));
+    	}
+
+    	if (errorsMessage.length !== 0) {
+      		return res.send({ status: 200, type: 'error', message: errorsMessage });
+		}
+
+		if (description.length > 300) {
+			return res.send({ status: 200, type: 'error', message: ['Field description is too long (max. 300 characters)'] });
+		}
+
+		if (first_name.length > 60) {
+			return res.send({ status: 200, type: 'error', message: ['Field first name is too long (max. 60 characters)'] });
+		}
+
+		if (last_name.length > 60) {
+			return res.send({ status: 200, type: 'error', message: ['Field last name is too long (max. 60 characters)'] });
+		}
+
+		if (req.files !== null) {
+			const file = req.files.file;
+
+			if (file.mimetype !== 'image/jpeg') {
+				return res.send({ status: 200, type: 'error', message: ['Unsupported file type. Only JPEG and PNG allowed'] });
+			}
+
+			if (file.size > 77000) {
+				return res.send({ status: 200, type: 'error', message: ['File is too large'] });
+			}
+
+			file.mv(path + filename, (err) => {
+				if (err) {
+					return res.send({ status: 500, type: 'error', message: ['There was a problem. Please try it later'] });
+				}
+			});
+		}
+
+		const data = { 
+			first_name: first_name, 
+			last_name: last_name, 
+			email: email, 
+			description: description, 
+			avatar: 'http://localhost:44912/' + path + filename 
+		};
+
+		const user = await User.findById({ _id: req.body.id });
+		user.first_name = data.first_name;
+		user.last_name = data.last_name;
+		user.email = data.email;
+		user.description = data.description;
+		if (filename !== null) {
+			user.avatar = data.avatar;
+		}
+
+		const query = user.save();
+
+		if (!query) {
+			return res.send({ status: 500, type: 'error', message: ['There was a problem. Please try it later'] });
+		}
+
+		return res.send({ status: 200, type: 'success', message: ['Profile updated'] });
+	}
 }

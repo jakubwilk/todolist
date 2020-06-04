@@ -1,28 +1,14 @@
 const Router = require('express');
-const { userValidationRules, registerUser, loginUser, checkToken } = require('./../services/user.service');
+const { userValidationRules, getUserData, getEditUser, postEditUser } = require('./../services/user.service');
 
 module.exports = {
-  create() {
-    const api = Router();
+	user() {
+		const api = Router();
 
-    api.post('/register', userValidationRules(), registerUser); 
+		api.get('/user/:id', getUserData);
+		api.get('/edit/:id', getEditUser);
+		api.put('/edit', userValidationRules(), postEditUser);
 
-    return api;
-  },
-
-  login() {
-    const api = Router();
-
-    api.post('/login', userValidationRules(), loginUser);
-
-    return api;
-  },
-
-  verify() {
-    const api = Router();
-
-    api.get('/token', checkToken);
-
-    return api;
-  },
+		return api;
+	},
 }

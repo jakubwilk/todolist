@@ -3,17 +3,25 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import ClockLoader from "react-spinners/ClockLoader";
 import styled from "styled-components";
+import AuthGuard from "./../utils/AuthGuard";
 import background from "../utils/login-background.jpg";
 
 import LoginForm from "./LoginForm";
 
 const LoginPage = styled.div`
     background-image: url(${props => props.background});
-    background-size: cover;
+    background-size: auto;
     background-repeat: no-repeat;
     background-position: center;
-    height: 100vh;
-    padding-top: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    height: 100%;
+
+    @media screen and (min-width: 1200px) {
+        background-size: cover;
+    }
 `;
 
 const Container = styled.div`
@@ -103,7 +111,8 @@ class Login extends React.Component {
         email: '',
         password: '',
         loading: false,
-        data: []
+        data: [],
+        redirect: false
     };
 
     componentDidMount = () => {
@@ -124,7 +133,11 @@ class Login extends React.Component {
 
         axios.post("http://localhost:44912/api/auth/login", { user }, { withCredentials: true })
             .then(res => {
-                this.setState({ data: res.data, loading: false });
+                if (res.data.type === "success") {
+                    this.setState({ redirect: true, loading: false });
+                } else {
+                    this.setState({ data: res.data, loading: false });
+                }
             })
             .catch(err => {
                 this.setState({ data: err.data, loading: false });
@@ -132,32 +145,38 @@ class Login extends React.Component {
     }
 
     render() {
-        return (
-            <LoginPage background={background}>
-                <Container>
-                    <FormContent>
-                        {this.state.loading && 
-                            <SpinnerLayer>
-                                <ClockLoader loading={this.props.loading} color={"#706fd3"} size={80} />
-                            </SpinnerLayer>
-                        }
-                        <PageTitle>Sign in</PageTitle>
-                        <LoginForm 
-                            email={this.state.email} 
-                            password={this.state.password} 
-                            updateState={this.updateState} 
-                            resType={this.state.data.type} 
-                            resMessage={this.state.data.message}
-                            submitMethod={this.fetchData}
-                            loading={this.state.loading} />
-                            <RegisterText>Don't have an account yet? <RegisterLink to="/register" title="Join to our small community">Join us</RegisterLink> for free!</RegisterText>
-                    </FormContent>
-                    <FormFooter>
-                        <HomeLink to="/" title="Back to homepage">← Home</HomeLink>
-                    </FormFooter>
-                </Container>
-            </LoginPage>
-        );
+        if (this.state.redirect) {
+            return (
+                <AuthGuard />
+            );
+        } else {
+            return (
+                <LoginPage background={background}>
+                    <Container>
+                        <FormContent>
+                            {this.state.loading && 
+                                <SpinnerLayer>
+                                    <ClockLoader loading={this.props.loading} color={"#706fd3"} size={80} />
+                                </SpinnerLayer>
+                            }
+                            <PageTitle>Sign in</PageTitle>
+                            <LoginForm 
+                                email={this.state.email} 
+                                password={this.state.password} 
+                                updateState={this.updateState} 
+                                resType={this.state.data.type} 
+                                resMessage={this.state.data.message}
+                                submitMethod={this.fetchData}
+                                loading={this.state.loading} />
+                                <RegisterText>Don't have an account yet? <RegisterLink to="/register" title="Join to our small community">Join us</RegisterLink> for free!</RegisterText>
+                        </FormContent>
+                        <FormFooter>
+                            <HomeLink to="/" title="Back to homepage">← Home</HomeLink>
+                        </FormFooter>
+                    </Container>
+                </LoginPage>
+            );
+        }
     }
 }
 

@@ -9,11 +9,18 @@ import RegisterForm from "./RegisterForm";
 
 const RegisterPage = styled.div`
     background-image: url(${props => props.background});
-    background-size: cover;
+    background-size: auto;
     background-repeat: no-repeat;
     background-position: center;
-    height: 100vh;
-    padding-top: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    height: 100%;
+
+    @media screen and (min-width: 1200px) {
+        background-size: cover;
+    }
 `;
 
 const Container = styled.div`
