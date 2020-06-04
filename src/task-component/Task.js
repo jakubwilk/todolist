@@ -2,6 +2,7 @@ import React from "react";
 import axios from "axios";
 import styled from "styled-components";
 import ClockLoader from "react-spinners/ClockLoader";
+import TaskItem from "./TaskItem";
 import ValidationMessage from "./../utils/ValidationMessage";
 import FormInput from "./../utils/FormInput";
 
@@ -84,6 +85,59 @@ const ListText = styled.p`
 	margin-bottom: 0;
 `;
 
+const AddTaskLayout = styled.div`
+	display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+	flex-wrap: wrap;
+
+	@media screen and (min-width: 768px) {
+		flex-wrap: nowrap;
+	}
+
+	& > .tasklist {
+		margin-bottom: 1.5rem;	
+    	width: 100%;
+
+		@media screen and (min-width: 768px) {
+			margin-bottom: 0;
+			width: calc(100% - 130px);
+		}
+	}
+
+	& input {
+		max-width: 100%;
+	}
+`;
+
+const AddTaskButton = styled.button`
+	cursor: pointer;
+    border: 0;
+    border-radius: 5px;
+	background-color: #badc58;
+	color: #fff;
+	padding: .65rem 1.5rem;
+	transition: all .1s ease-in-out;
+	margin-left: auto;
+    margin-right: auto;
+
+	&:hover,
+	&:focus {
+		outline: none;
+		background-color: #6ab04c;
+	}
+
+	&[disabled] {
+		user-select: none;
+		pointer-events: none;
+		opacity: .6;
+	}
+
+	@media screen and (min-width: 768px) {
+		margin-right: 0;
+	}
+`;
+
 const ModalFooter = styled.footer`
 	background-color: white;
 	padding: 1rem 1.5rem;
@@ -119,12 +173,13 @@ class Task extends React.Component {
 		title: "",
 		description: "",
 		taskName: "",
+		message: "",
 		response: [],
 		tasks: [],
         loading: false
-    }
-
-    componentDidMount = () => {
+	}
+	
+	getTaskList = () => {
 		this.setState({ loading: true });
 		const body = {
 			userId: this.props.userId,
@@ -133,14 +188,84 @@ class Task extends React.Component {
 
 		axios.get("http://localhost:44912/api/task/list/" + body.listId + "/user/" + body.userId, { withCredentials: true })
 			.then(res => {
-				console.log(res.data.list);
-				this.setState({ title: res.data.list.title, description: res.data.list.description, loading: false });
+				console.log(res);
+				const response = res.data;
+				this.setState({ title: response.message.list.title, description: response.message.list.description });
+				if (response.type === 'error') {
+					this.setState({ message: response.message.text, loading: false });
+				} else {
+					this.setState({ message: "", tasks: response.message.tasks, loading: false });
+				}
 			})
 			.catch(err => {
 				console.log(err);
 				this.setState({ loading: false });
 			})
-    }
+	}
+
+	addNewTask = () => {
+		const data = {
+			title: this.state.taskName,
+			listId: this.props.listId
+		}
+
+		this.setState({ loading: true });
+		axios.post("http://localhost:44912/api/task/create", { data }, { withCredentials: true })
+			.then(res => {
+				if (res.data.type === "success") {
+					this.setState({ response: [], loading: false });
+				} else {
+					this.setState({ loading: false });
+				}			
+				this.getTaskList();
+			})
+			.catch(err => {
+				console.log(err);
+				this.setState({ loading: false });
+				this.getTaskList();
+			});
+	}
+
+    componentDidMount = () => {
+		this.getTaskList();
+	}
+
+	updateData = (e) => {
+		this.setState({ taskName: e.target.value })
+	}
+
+	updateTask = (e) => {
+		const taskId = e.target.getAttribute("data-id");
+		const checked = e.target.checked;
+		
+		this.setState({ loading: true });
+		axios.get("http://localhost:44912/api/task/update/" + taskId + "/" + checked, { withCredentials: true })
+			.then(res => {
+				this.setState({ response: res.data, loading: false });
+				this.getTaskList();
+			})
+			.catch(err => {
+				console.log(err);
+				this.setState({ loading: false });
+				this.getTaskList();
+			});
+	}
+
+	deleteTask = (e) => {
+		const taskId = e.target.getAttribute("data-id");
+
+		this.setState({ loading: true });
+		axios.get("http://localhost:44912/api/task/delete/" + taskId, { withCredentials: true })
+			.then(res => {
+				this.setState({ response: res.data, loading: false });
+				this.getTaskList();
+			})
+			.catch(err => {
+				console.log(err);
+				this.setState({ loading: false });
+				this.getTaskList();
+			});
+	}
 
     render() {
         return (
@@ -162,17 +287,41 @@ class Task extends React.Component {
                                 : 
                                     null
                                 }
-								<FormInput 
-									labelFor="task" 
-									labelName="Add Task" 
-									type="text" 
-									name="task" 
-									id="task" 
-									groupClass="tasklist tasklist-title"
-									value={this.state.taskName} 
-									handleChange={this.props.updateData} 
-									placeholder="Add new task" 
-								/>
+								<AddTaskLayout>
+									<FormInput 
+										labelFor="task" 
+										labelName="Describe your task" 
+										type="text" 
+										name="task" 
+										id="task" 
+										groupClass="tasklist tasklist-title"
+										value={this.state.taskName} 
+										handleChange={this.updateData} 
+										placeholder="Add new task" 
+									/>
+									{this.state.taskName === "" ?
+										<AddTaskButton disabled>Add task</AddTaskButton>
+									:
+										<AddTaskButton onClick={this.addNewTask}>Add task</AddTaskButton>
+									}
+								</AddTaskLayout>
+								{this.state.message !== "" ?
+									<p>{this.state.message}</p>
+								:
+									<>
+										<h4>Tasks:</h4>
+										{this.state.tasks.map(task => 
+											<TaskItem 
+												key={task._id} 
+												title={task.name} 
+												finished={task.finished} 
+												taskId={task._id} 
+												deleteTask={this.deleteTask} 
+												markTask={this.updateTask}
+											/>
+										)}
+									</>
+								}
                             </>
                         }
                     </ModalBody>
