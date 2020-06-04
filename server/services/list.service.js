@@ -85,8 +85,8 @@ module.exports = {
         } else {
             const data = {
                 title: title,
-                description: title,
-                author: title,
+                description: description,
+                author: author,
                 finished: finished
             }
 

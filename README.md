@@ -1,7 +1,7 @@
 <div align="center"><img src="https://i.imgur.com/5e9Ob4V.png" /></div>
 
 ## About
-This is landing page for TODO app and was bootstrapped with [Create React App](https://github.com/facebook/create-react-app). Of course it's another boring TODO web aplication. It will be using **Express** and **Firebase** as backend to storage user data... in future.
+This is landing page for TODO app and was bootstrapped with [Create React App](https://github.com/facebook/create-react-app). Of course it's another boring TODO web aplication. Used **ExpressJS** and **MongoDB** as backend framework and data storage. Everything is simple, clear and clean.
 
 ## Some hot screens
 
@@ -10,6 +10,12 @@ This is landing page for TODO app and was bootstrapped with [Create React App](h
 ![Login page](https://i.imgur.com/gNMTBVP.png)
 
 ![Register page](https://i.imgur.com/Hrz2snJ.png)
+
+![Dashboard](https://i.imgur.com/GllL6rd.png)
+
+![User profile](https://i.imgur.com/Cx23AoI.png)
+
+![Task list](https://i.imgur.com/cFcTzjr.png)
 
 ## Available Scripts
 

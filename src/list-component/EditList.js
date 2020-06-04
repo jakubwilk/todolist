@@ -153,6 +153,7 @@ class EditList extends React.Component {
             axios.get("http://localhost:44912/api/userlist/edit/" + this.props.listId, { withCredentials: true })
                 .then(res => {
                     const list = res.data.message;
+                    console.log(res);
                     this.setState({ title: list.title, description: list.description, author: list.author, finished: list.finished, loading: false });
                 })
                 .catch(err => {
