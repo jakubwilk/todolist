@@ -186,7 +186,7 @@ class Task extends React.Component {
 			listId: this.props.listId
 		}
 
-		axios.get("http://localhost:44912/api/task/list/" + body.listId + "/user/" + body.userId, { withCredentials: true })
+		axios.get("https://api.todoapp.jakubwilk.pl/api/task/list/" + body.listId + "/user/" + body.userId, { withCredentials: true })
 			.then(res => {
 				console.log(res);
 				const response = res.data;
@@ -210,7 +210,7 @@ class Task extends React.Component {
 		}
 
 		this.setState({ loading: true });
-		axios.post("http://localhost:44912/api/task/create", { data }, { withCredentials: true })
+		axios.post("https://api.todoapp.jakubwilk.pl/api/task/create", { data }, { withCredentials: true })
 			.then(res => {
 				if (res.data.type === "success") {
 					this.setState({ response: [], loading: false });
@@ -239,7 +239,7 @@ class Task extends React.Component {
 		const checked = e.target.checked;
 		
 		this.setState({ loading: true });
-		axios.get("http://localhost:44912/api/task/update/" + taskId + "/" + checked, { withCredentials: true })
+		axios.get("https://api.todoapp.jakubwilk.pl/api/task/update/" + taskId + "/" + checked, { withCredentials: true })
 			.then(res => {
 				this.setState({ response: res.data, loading: false });
 				this.getTaskList();
@@ -255,7 +255,7 @@ class Task extends React.Component {
 		const taskId = e.target.getAttribute("data-id");
 
 		this.setState({ loading: true });
-		axios.get("http://localhost:44912/api/task/delete/" + taskId, { withCredentials: true })
+		axios.get("https://api.todoapp.jakubwilk.pl/api/task/delete/" + taskId, { withCredentials: true })
 			.then(res => {
 				this.setState({ response: res.data, loading: false });
 				this.getTaskList();

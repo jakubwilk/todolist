@@ -127,7 +127,7 @@ class Register extends React.Component {
 
         this.setState({ loading: true });
 
-        axios.post("http://localhost:44912/api/auth/register", { user })
+        axios.post("https://api.todoapp.jakubwilk.pl/api/auth/register", { user })
             .then(res => {
                 this.setState({ data: res.data, loading: false });
             })

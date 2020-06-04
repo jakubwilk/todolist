@@ -87,7 +87,7 @@ module.exports = {
 			last_name: last_name, 
 			email: email, 
 			description: description, 
-			avatar: 'http://localhost:44912/' + path + filename 
+			avatar: 'https://api.todoapp.jakubwilk.pl/' + path + filename 
 		};
 
 		const user = await User.findById({ _id: req.body.id });

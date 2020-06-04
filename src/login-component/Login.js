@@ -131,7 +131,7 @@ class Login extends React.Component {
 
         this.setState({ loading: true });
 
-        axios.post("http://localhost:44912/api/auth/login", { user }, { withCredentials: true })
+        axios.post("https://api.todoapp.jakubwilk.pl/api/auth/login", { user }, { withCredentials: true })
             .then(res => {
                 if (res.data.type === "success") {
                     this.setState({ redirect: true, loading: false });

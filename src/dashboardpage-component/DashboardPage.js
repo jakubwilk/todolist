@@ -46,7 +46,7 @@ class DashboardPage extends React.Component {
 
     logoutUser = () => {
         this.setState({ loading: true });
-        axios.get("http://localhost:44912/api/auth/logout/", { withCredentials: true })
+        axios.get("https://api.todoapp.jakubwilk.pl/api/auth/logout/", { withCredentials: true })
             .then(res => {
                 this.setState({ logout: true, loading: false });
             })
@@ -58,7 +58,7 @@ class DashboardPage extends React.Component {
     deleteUserList = (e) => {
         this.setState({ editListId: e.target.getAttribute('data-id') });
         this.setState({ loading: true });
-        axios.get("http://localhost:44912/api/userlist/delete/" + this.state.editListId, { withCredentials: true })
+        axios.get("https://api.todoapp.jakubwilk.pl/api/userlist/delete/" + this.state.editListId, { withCredentials: true })
             .then(res => {
                 if (res.data.status === 200) {
                     window.location.reload(false);

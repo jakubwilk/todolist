@@ -150,7 +150,7 @@ class EditList extends React.Component {
     componentDidMount = () => {
         if (this.props.listId !== 0) {
             this.setState({ loading: true });
-            axios.get("http://localhost:44912/api/userlist/edit/" + this.props.listId, { withCredentials: true })
+            axios.get("https://api.todoapp.jakubwilk.pl/api/userlist/edit/" + this.props.listId, { withCredentials: true })
                 .then(res => {
                     const list = res.data.message;
                     console.log(res);
@@ -174,7 +174,7 @@ class EditList extends React.Component {
         }
 
         this.setState({ loading: true });
-        axios.post("http://localhost:44912/api/userlist/create", { list },  { withCredentials: true })
+        axios.post("https://api.todoapp.jakubwilk.pl/api/userlist/create", { list },  { withCredentials: true })
             .then(res => {
                 if (res.data.type === "success") {
                     window.location.reload(false);

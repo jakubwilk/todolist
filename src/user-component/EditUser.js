@@ -166,7 +166,7 @@ class EditUser extends React.Component {
 
 	componentDidMount = () => {
 		this.setState({ loading: true });
-		axios.get("http://localhost:44912/api/user/edit/" + this.props.userId, { withCredentials: true })
+		axios.get("https://api.todoapp.jakubwilk.pl/api/user/edit/" + this.props.userId, { withCredentials: true })
 			.then(res => {
 				const user = res.data.user;
 				this.setState({ first_name: user.first_name, last_name: user.first_name, email: user.email, avatar: user.avatar, description: user.description, loading: false });
@@ -198,7 +198,7 @@ class EditUser extends React.Component {
 		user.append('file', this.state.file);
 		
 		this.setState({ loading: true });
-		axios({ url: "http://localhost:44912/api/user/edit", method: "PUT", data: user, withCredentials: true })
+		axios({ url: "https://api.todoapp.jakubwilk.pl/api/user/edit", method: "PUT", data: user, withCredentials: true })
 			.then(res => {
 				this.setState({ response: res.data, loading: false });
 			})

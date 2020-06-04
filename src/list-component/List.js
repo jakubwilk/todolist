@@ -104,7 +104,7 @@ class List extends React.Component {
     componentDidMount = () => {
         this.setState({ loading: true });
 
-        axios.get("http://localhost:44912/api/userlist/lists/" + this.props.userId, { withCredentials: true })
+        axios.get("https://api.todoapp.jakubwilk.pl/api/userlist/lists/" + this.props.userId, { withCredentials: true })
             .then(res => {
                 if (res.data.type === "success") {
                     this.setState({ message: "", lists: res.data.message, loading: false });

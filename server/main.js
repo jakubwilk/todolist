@@ -18,7 +18,7 @@ const uri = process.env['ATLAS_URI'];
 
 const bootstrap = () => {
 
-	app.use(cors({ credentials: true, origin: 'http://localhost:3000' }));
+	app.use(cors({ credentials: true, origin: 'https://todoapp.jakubwilk.pl' }));
 	app.use(cookieParser());
 	app.use(express.json());
 	app.use(bodyParser.urlencoded({ extended: false }));

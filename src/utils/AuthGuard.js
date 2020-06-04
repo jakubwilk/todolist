@@ -26,7 +26,7 @@ class AuthGuard extends React.Component {
     }
 
     componentDidMount = () => {
-        axios.get("http://localhost:44912/api/auth/token", { withCredentials: true })
+        axios.get("https://api.todoapp.jakubwilk.pl/api/auth/token", { withCredentials: true })
             .then(res => {
                 if (res.data.status === 200) {
                     this.setState({ userId: res.data.message, loading: false });
