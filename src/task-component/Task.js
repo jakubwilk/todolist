@@ -188,7 +188,6 @@ class Task extends React.Component {
 
 		axios.get("http://localhost:44912/api/task/list/" + body.listId + "/user/" + body.userId, { withCredentials: true })
 			.then(res => {
-				console.log(res);
 				const response = res.data;
 				this.setState({ title: response.message.list.title, description: response.message.list.description });
 				if (response.type === 'error') {
@@ -198,7 +197,6 @@ class Task extends React.Component {
 				}
 			})
 			.catch(err => {
-				console.log(err);
 				this.setState({ loading: false });
 			})
 	}
@@ -213,7 +211,7 @@ class Task extends React.Component {
 		axios.post("http://localhost:44912/api/task/create", { data }, { withCredentials: true })
 			.then(res => {
 				if (res.data.type === "success") {
-					this.setState({ response: [], loading: false });
+					this.setState({ response: [], taskName: "", loading: false });
 				} else {
 					this.setState({ loading: false });
 				}			

@@ -110,7 +110,7 @@ class ListItem extends React.Component {
                                 <ButtonMenu data-action="editList" data-id={this.props.id} onClick={this.props.handleClick}>Edit</ButtonMenu>
                             </li>
                             <li>
-                                <ButtonMenu data-id={this.props.id} onClick={this.props.handleDelete}>Delete</ButtonMenu>
+                                <ButtonMenu data-id={this.props.id} onClick={(e) => this.props.handleDelete(this)}>Delete</ButtonMenu>
                             </li>
                         </ItemMenu>
                     </FooterGrid>

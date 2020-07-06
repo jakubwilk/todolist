@@ -2,6 +2,7 @@ import React from "react";
 import axios from "axios";
 import styled from "styled-components";
 import { Redirect } from "react-router-dom";
+import ClockLoader from "react-spinners/ClockLoader";
 import DashboardNavigation from "./../dashboard-component/DashboardNavigation";
 import EditUser from "./../user-component/EditUser";
 import List from "./../list-component/List";
@@ -17,6 +18,24 @@ const ValidationBox = styled.div`
     width: 40vw;
 `;
 
+const SpinnerLayer = styled.div`
+    position: absolute;
+    top: 141px;
+    left: 0;
+    width: 100%;
+    height: calc(100% - 141px);
+    z-index: 10;
+    background-color: rgba(255,255,255, .65);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    @media screen and (min-width: 768px) {
+        top: 72px;
+        height: calc(100% - 72px);
+    }
+`;
+
 class DashboardPage extends React.Component {
     state = {
         editProfile: false,
@@ -30,6 +49,10 @@ class DashboardPage extends React.Component {
 
 	componentDidMount = () => {
         document.title = "ToDo List - Your new TODO tool";
+
+        if (this.state.render) {
+            this.forceUpdate();
+        }
     }
 
     updateState = (e) => {
@@ -56,12 +79,11 @@ class DashboardPage extends React.Component {
     }
 
     deleteUserList = (e) => {
-        this.setState({ editListId: e.target.getAttribute('data-id') });
         this.setState({ loading: true });
-        axios.get("http://localhost:44912/api/userlist/delete/" + this.state.editListId, { withCredentials: true })
+        axios.get("http://localhost:44912/api/userlist/delete/" + e.props.id, { withCredentials: true })
             .then(res => {
                 if (res.data.status === 200) {
-                    window.location.reload(false);
+                    this.setState({ loading: false });
                 } else {
                     this.setState({ response: res.data, loading: false });
                 }
@@ -78,17 +100,25 @@ class DashboardPage extends React.Component {
 
         return (
             <>
-                <DashboardNavigation userId={this.props.userId} updateState={this.updateState} logoutAction={this.logoutUser} />
-                {this.state.editProfile ? <EditUser userId={this.props.userId} updateState={this.updateState} focus={this.state.editProfile} /> : null}
-                {this.state.editList ? <EditList userId={this.props.userId} updateState={this.updateState} listId={this.state.editListId} /> : null }
-                {this.state.editTask ? <Task userId={this.props.userId} updateState={this.updateState} listId={this.state.editListId} /> : null}
-                <List userId={this.props.userId} updateState={this.updateState} deleteList={this.deleteUserList} />
-                {!this.state.loading && this.state.response.length === 0 ? 
-                    null
+                {this.state.loading ?
+                    <SpinnerLayer>
+                        <ClockLoader loading={this.props.loading} color={"#706fd3"} size={80} />
+                    </SpinnerLayer>
                 :
-                    <ValidationBox>
-                        <ValidationMessage type={this.state.response.type} message={this.state.response.message} />
-                    </ValidationBox>
+                    <>
+                        <DashboardNavigation userId={this.props.userId} updateState={this.updateState} logoutAction={this.logoutUser} />
+                        {this.state.editProfile ? <EditUser userId={this.props.userId} updateState={this.updateState} focus={this.state.editProfile} /> : null}
+                        {this.state.editList ? <EditList userId={this.props.userId} updateState={this.updateState} listId={this.state.editListId} /> : null }
+                        {this.state.editTask ? <Task userId={this.props.userId} updateState={this.updateState} listId={this.state.editListId} /> : null}
+                        <List userId={this.props.userId} updateState={this.updateState} deleteList={this.deleteUserList} />
+                        {this.state.response.length === 0 ? 
+                            null
+                        :
+                            <ValidationBox>
+                                <ValidationMessage type={this.state.response.type} message={this.state.response.message} />
+                            </ValidationBox>
+                        }   
+                    </>
                 }
             </>
         );
